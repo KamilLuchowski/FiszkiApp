@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import java.util.concurrent.Executors
 
-@Database(entities = [Language::class, LangToLang::class, Topic::class, Flashcard::class], version = 9, exportSchema = false)
+@Database(entities = [Language::class, LangToLang::class, Topic::class, Flashcard::class], version = 10, exportSchema = false)
 abstract class FiszkiDatabase : RoomDatabase(){
 
     abstract val fiszkiDatabaseDao: FiszkiDatabaseDao

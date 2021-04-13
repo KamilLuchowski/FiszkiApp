@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fiszkiapp.R
 import com.example.fiszkiapp.database.FiszkiDatabase
 import com.example.fiszkiapp.databinding.FragmentTitleBinding
@@ -33,13 +34,11 @@ class TitleFragment : Fragment() {
 
        val binding : FragmentTitleBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_title, container, false)
 
-        val adapter = LangToLangAdapter { item ->
-            Navigation
-                    .findNavController(view!!)
-                    .navigate(TitleFragmentDirections.actionTitleFragmentToTopicsFragment(item))
-        }
-        binding.list.adapter = adapter
 
+
+        val adapter = LangToLangAdapter(application.applicationContext)
+        binding.list.adapter = adapter
+        //binding.list.layoutManager = LinearLayoutManager(context)
 
         viewModel.nights.observe(viewLifecycleOwner, Observer {
             adapter.data = it
@@ -47,8 +46,5 @@ class TitleFragment : Fragment() {
         })
 
         return binding.root
-
     }
-
-
 }

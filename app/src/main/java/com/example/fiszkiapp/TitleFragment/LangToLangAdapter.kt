@@ -1,36 +1,43 @@
 package com.example.fiszkiapp.TitleFragment
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fiszkiapp.R
 import com.example.fiszkiapp.database.LanguageAndLangToLang
 
-class LangToLangAdapter( val listener: (Int) -> Unit): RecyclerView.Adapter<LangToLangAdapter.ViewHolder>() {
+
+class LangToLangAdapter(val context: Context): RecyclerView.Adapter<LangToLangAdapter.ViewHolder>() {
 
     var data = listOf<LanguageAndLangToLang>()
 
     override fun getItemCount() = data.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
-        holder.bind(data[position])
-        data[position].l2l.langToLangId
-        holder.itemView.setOnClickListener {  listener(data[position].l2l.langToLangId) }
-
-        if ((position%2) == 1) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#eef4be"))
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        holder.bind(data[position])
+        holder.itemView.setOnClickListener{
+            Navigation
+                .findNavController(holder.itemView)
+                .navigate(TitleFragmentDirections.actionTitleFragmentToTopicsFragment(data[position].l2l.langToLangId))
+        }
+    }
+
     class ViewHolder private constructor(itemView : View): RecyclerView.ViewHolder(itemView){
+
         fun bind(item: LanguageAndLangToLang) {
             text1.text = item.language1.name
             text2.text = item.language2.name

@@ -32,8 +32,8 @@ interface FiszkiDatabaseDao {
     fun getLang2Langs(): LiveData<List<LanguageAndLangToLang>>
 
     @Transaction
-    @Query("SELECT * FROM langToLang_table")
-    suspend fun getUsersWithPlaylists(): List<LangToLangAndTopic>
+    @Query("SELECT * FROM topic_table WHERE topicLang2Lang =:key")
+    fun getUsersWithPlaylists(key: Int): LiveData<List<Topic>>
 
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTopic(topic: Topic)

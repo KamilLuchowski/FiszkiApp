@@ -35,10 +35,15 @@ class TitleViewModel(val dataSource: FiszkiDatabaseDao, application: Application
 
     private suspend fun func() {
         dataSource.insertTopic(Topic(0, "Podróże", 0))
-        val x = dataSource.getUsersWithPlaylists()
-        x.forEach {
-            Log.i("asd", x.toString())
-        }
+        dataSource.insertTopic(Topic(1, "Kuchnia", 0))
+        dataSource.insertTopic(Topic(2, "Dom", 0))
+        dataSource.insertTopic(Topic(3, "Praca", 0))
+        dataSource.insertTopic(Topic(4, "IT", 0))
+        dataSource.insertTopic(Topic(5, "Rolnictwo", 1))
+        dataSource.insertTopic(Topic(6, "Fabryka", 1))
+        dataSource.insertTopic(Topic(7, "Górnictwo", 1))
+        dataSource.insertTopic(Topic(8, "Podróże", 1))
+
 
         //Log.i("fff", x[0].topics[0].topicName)
         }
