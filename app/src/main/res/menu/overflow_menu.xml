@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/topic_delete"
+        android:title="Delete a topic" />
+    <item android:id="@+id/topic_rename"
+        android:title="Rename a topic" />
+</menu>

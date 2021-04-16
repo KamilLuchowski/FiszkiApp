@@ -11,7 +11,8 @@
         android:label="TitleFragment" >
         <action
             android:id="@+id/action_titleFragment_to_topicsFragment"
-            app:destination="@id/topicsFragment" />
+            app:destination="@id/topicsFragment"
+            app:popUpTo="@id/titleFragment" />
     </fragment>
     <fragment
         android:id="@+id/topicsFragment"
@@ -20,6 +21,32 @@
         tools:layout="@layout/fragment_topics" >
         <argument
             android:name="langToLang"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_topicsFragment_to_flashcardsFragment"
+            app:destination="@id/flashcardsFragment"
+            app:popUpTo="@id/topicsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/flashcardsFragment"
+        android:name="com.example.fiszkiapp.FlashcardsFragment.FlashcardsFragment"
+        android:label="FlashcardsFragment" >
+        <argument
+            android:name="topic"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_flashcardsFragment_to_addEditFlashcardFragment"
+            app:destination="@id/addEditFlashcardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEditFlashcardFragment"
+        android:name="com.example.fiszkiapp.AddEditFlashcard.AddEditFlashcardFragment"
+        android:label="AddEditFlashcardFragment" >
+        <argument
+            android:name="flashcardId"
+            app:argType="integer" />
+        <argument
+            android:name="topicId"
             app:argType="integer" />
     </fragment>
 </navigation>

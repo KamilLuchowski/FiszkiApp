@@ -8,13 +8,14 @@ import com.example.fiszkiapp.database.FiszkiDatabaseDao
 
 class TopicsViewModelFactory(
     private val dataSource: FiszkiDatabaseDao,
-    private val application: Application
+    private val application: Application,
+    private val langToLangId: Int
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         @Suppress("unchecked_cast")
         if (modelClass.isAssignableFrom(TopicsViewModel::class.java)) {
-            return TopicsViewModel(dataSource, application) as T
+            return TopicsViewModel(dataSource, application, langToLangId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

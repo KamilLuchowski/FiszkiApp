@@ -39,6 +39,9 @@ class TopicsAdapter(var context: Context): RecyclerView.Adapter<TopicsAdapter.Vi
 
         holder.itemView.setOnClickListener{
             Toast.makeText(context, data[position].topicName, Toast.LENGTH_SHORT).show()
+            Navigation
+                .findNavController(holder.itemView)
+                .navigate(TopicsFragmentDirections.actionTopicsFragmentToFlashcardsFragment(data[position].topicId))
         }
     }
 

@@ -4,10 +4,10 @@ import androidx.room.*
 
 @Entity(tableName = "flashcard_table")
 data class Flashcard(
-
-    @PrimaryKey
-    var flashcardId: Int,
     var word: String,
-    var transaction: String,
+    var translation: String,
     var flashcardTopic: Int
-)
+){
+    @PrimaryKey (autoGenerate = true)
+    var flashcardId: Int = 0
+}

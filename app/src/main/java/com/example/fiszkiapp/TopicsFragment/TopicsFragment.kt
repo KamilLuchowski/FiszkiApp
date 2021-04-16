@@ -1,24 +1,27 @@
 package com.example.fiszkiapp.TopicsFragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fiszkiapp.R
-import com.example.fiszkiapp.TitleFragment.LangToLangAdapter
-import com.example.fiszkiapp.TitleFragment.TitleViewModel
-import com.example.fiszkiapp.TitleFragment.TitleViewModelFactory
 import com.example.fiszkiapp.database.FiszkiDatabase
-import com.example.fiszkiapp.databinding.FragmentTitleBinding
+import com.example.fiszkiapp.database.Topic
 import com.example.fiszkiapp.databinding.FragmentTopicsBinding
+
 
 class TopicsFragment : Fragment() {
 
@@ -34,40 +37,61 @@ class TopicsFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val dataSource = FiszkiDatabase.getInstance(application).fiszkiDatabaseDao
 
+        val langTolangId: Int = TopicsFragmentArgs.fromBundle(arguments!!).langToLang
 
-        viewModelFactory = TopicsViewModelFactory(dataSource, application)
+        viewModelFactory = TopicsViewModelFactory(dataSource, application, langTolangId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(TopicsViewModel::class.java)
-
-        var langTolangId: Int = TopicsFragmentArgs.fromBundle(arguments!!).langToLang
-        Log.i("RRR", langTolangId.toString())
-        viewModel.langToLangId = langTolangId
-       // val args = TopicsFragmentArgs.fromBundle(arguments!!)
 
         Toast.makeText(context, "langToLangArg: ${langTolangId}", Toast.LENGTH_LONG).show()
 
-
         val binding : FragmentTopicsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_topics, container, false)
-        //binding.editTextTextPersonName.setSelectAllOnFocus(true);
+
+
+
+
 
         val adapter = TopicsAdapter(application.applicationContext)
-
         val view = inflater.inflate(R.layout.fragment_topics, container,  false)
-
         val aaa = view.findViewById<RecyclerView>(R.id.topics_list)
-        
+
         aaa.adapter = adapter
         aaa.layoutManager = LinearLayoutManager(context)
 
-        //binding.topicsList.adapter = adapter
-        //binding.topicsList.layoutManager = LinearLayoutManager(context)
+//        class  simpleItemTouchCallback: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+//
+//            override fun onMove(
+//                recyclerView: RecyclerView,
+//                viewHolder: RecyclerView.ViewHolder,
+//                target: RecyclerView.ViewHolder
+//            ): Boolean {
+//                return true
+//            }
+//
+//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//                //
+//            }
+//        }
+//
+//        val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback())
+//        itemTouchHelper.attachToRecyclerView(aaa)
 
         viewModel.langToLangAndTopic.observe(viewLifecycleOwner, Observer {
             adapter.data = it
-            Log.i("RRR_2", it.size.toString())
             adapter.notifyDataSetChanged()
         })
 
-        // Inflate the layout for this fragment
+        view.findViewById<Button>(R.id.button).setOnClickListener {
+            val editText = view.findViewById<EditText>(R.id.editTextTextPersonName)
+            viewModel.insertTopic(Topic( editText.text.toString(), langTolangId))
+          Log.i("aaa", view.findViewById<EditText>(R.id.editTextTextPersonName).text.toString())
+            activity?.currentFocus?.let { view ->
+                val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
+                editText.clearFocus()
+                editText.text.clear()
+            }
+        }
+
         return view
     }
 }

@@ -6,6 +6,9 @@ import androidx.room.*
 @Dao
 interface FiszkiDatabaseDao {
 
+    @Query("SELECT count(*) FROM langToLang_table")
+    fun langToLangCount(): Int
+
     @Insert
     fun insertLanguage(lang: Language)
 
@@ -20,9 +23,6 @@ interface FiszkiDatabaseDao {
 
     @Query("DELETE FROM langToLang_table")
     suspend fun clearLangToLang()
-//
-//    @Query("SELECT * from langToLang_table")
-//    suspend fun getLangToLangs(): List<LangToLang>
 
     @Query("SELECT * FROM langToLang_table")
     fun getAllNights(): LiveData<List<LangToLang>>
@@ -37,6 +37,29 @@ interface FiszkiDatabaseDao {
 
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTopic(topic: Topic)
+
+    @Transaction
+    @Query("SELECT * FROM flashcard_table WHERE flashcardTopic =:key")
+    fun getFlashcards(key: Int): LiveData<List<Flashcard>>
+
+    @Insert (onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFlashcard(flashcard: Flashcard)
+
+    @Query("DELETE FROM flashcard_table WHERE flashcardTopic =:key")
+    suspend fun deleteTopicFlashcards(key: Int)
+
+    @Query("DELETE FROM topic_table WHERE topicId=:key")
+    suspend fun deleteTopic(key: Int)
+
+    @Query("SELECT * FROM flashcard_table WHERE flashcardId =:key LIMIT 1")
+    fun getFlashcard(key: Int): LiveData<Flashcard>
+
+    @Query("DELETE FROM flashcard_table WHERE flashcardId=:key")
+    fun deleteFlashcard(key: Int)
+
+    @Query("UPDATE topic_table SET topicName=:newName WHERE topicId=:key")
+    suspend fun updateTopic(key: Int, newName: String)
+
 }
 
 

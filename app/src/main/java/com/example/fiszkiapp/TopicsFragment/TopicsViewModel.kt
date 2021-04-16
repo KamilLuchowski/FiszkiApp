@@ -9,14 +9,14 @@ import com.example.fiszkiapp.database.LangToLangAndTopic
 import com.example.fiszkiapp.database.Topic
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class TopicsViewModel(val dataSource: FiszkiDatabaseDao, application: Application): ViewModel(){
+class TopicsViewModel(val dataSource: FiszkiDatabaseDao, application: Application, val langToLangId: Int): ViewModel(){
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.IO + viewModelJob)
-    var langToLangId: Int = 0
 
     private lateinit var _langToLangAndTopic: LiveData<List<Topic>>
     val langToLangAndTopic
@@ -33,12 +33,13 @@ class TopicsViewModel(val dataSource: FiszkiDatabaseDao, application: Applicatio
         }
     }
 
-    private suspend fun func() {
-        Log.i("asdi", langToLangId.toString())
+    private fun func() {
         _langToLangAndTopic = dataSource.getUsersWithPlaylists(langToLangId)
-        _langToLangAndTopic.value?.forEach {
-            Log.i("asd", _langToLangAndTopic.toString())
-        }
     }
 
+    fun insertTopic(topic: Topic){
+        CoroutineScope(IO).launch {
+            dataSource.insertTopic(topic)
+        }
+    }
 }

@@ -1,13 +1,14 @@
 package com.example.fiszkiapp.database
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import java.util.concurrent.Executors
 
-@Database(entities = [Language::class, LangToLang::class, Topic::class, Flashcard::class], version = 10, exportSchema = false)
+@Database(entities = [Language::class, LangToLang::class, Topic::class, Flashcard::class], version = 14, exportSchema = true)
 abstract class FiszkiDatabase : RoomDatabase(){
 
     abstract val fiszkiDatabaseDao: FiszkiDatabaseDao
@@ -32,6 +33,7 @@ abstract class FiszkiDatabase : RoomDatabase(){
                                     //pre-populate data
                                     Executors.newSingleThreadExecutor().execute {
                                         instance?.let {
+                                            Log.i("tutaj", "")
                                             it.fiszkiDatabaseDao.insertLanguage(Language(0, "polish", "pl"))
                                             it.fiszkiDatabaseDao.insertLanguage(Language(1, "english", "en"))
                                             it.fiszkiDatabaseDao.insertLanguage(Language(2, "russian", "ru"))
