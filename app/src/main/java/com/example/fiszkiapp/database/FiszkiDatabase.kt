@@ -33,7 +33,6 @@ abstract class FiszkiDatabase : RoomDatabase(){
                                     //pre-populate data
                                     Executors.newSingleThreadExecutor().execute {
                                         instance?.let {
-                                            Log.i("tutaj", "")
                                             it.fiszkiDatabaseDao.insertLanguage(Language(0, "polish", "pl"))
                                             it.fiszkiDatabaseDao.insertLanguage(Language(1, "english", "en"))
                                             it.fiszkiDatabaseDao.insertLanguage(Language(2, "russian", "ru"))

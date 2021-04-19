@@ -60,6 +60,15 @@ interface FiszkiDatabaseDao {
     @Query("UPDATE topic_table SET topicName=:newName WHERE topicId=:key")
     suspend fun updateTopic(key: Int, newName: String)
 
+    @Transaction
+    @Query("SELECT * FROM flashcard_table WHERE flashcardId=:key")
+    fun getFlashcardandTopic(key: Int): LiveData<FlashcardAndTopic>
+
+    @Transaction
+    @Query(
+        "UPDATE flashcard_table SET word=:newWord, translation=:newTranslation WHERE flashcardId=:key")
+     suspend fun updateFlashcard(key: Int, newWord: String, newTranslation: String)
+
 }
 
 

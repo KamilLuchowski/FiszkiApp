@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/topic_delete"
-        android:title="Delete a topic" />
+        android:title="@string/delete_a_topic" />
     <item android:id="@+id/topic_rename"
-        android:title="Rename a topic" />
+        android:title="@string/rename_a_topic" />
 </menu>

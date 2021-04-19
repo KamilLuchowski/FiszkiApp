@@ -22,10 +22,6 @@ import kotlin.contracts.contract
 class TopicsAdapter(var context: Context): RecyclerView.Adapter<TopicsAdapter.ViewHolder>() {
 
     var data = listOf<Topic>()
-    init {
-        Log.i("RRR_4", data.size.toString())
-
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -38,7 +34,6 @@ class TopicsAdapter(var context: Context): RecyclerView.Adapter<TopicsAdapter.Vi
         holder.bind(data[position], position)
 
         holder.itemView.setOnClickListener{
-            Toast.makeText(context, data[position].topicName, Toast.LENGTH_SHORT).show()
             Navigation
                 .findNavController(holder.itemView)
                 .navigate(TopicsFragmentDirections.actionTopicsFragmentToFlashcardsFragment(data[position].topicId))

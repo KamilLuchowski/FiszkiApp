@@ -1,14 +1,9 @@
 package com.example.fiszkiapp.TitleFragment
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -31,9 +26,6 @@ class TitleFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val dataSource = FiszkiDatabase.getInstance(application).fiszkiDatabaseDao
 
-         val ndb = FiszkiDatabase.getInstance(context!!);
-        ndb.getOpenHelper();
-
         viewModelFactory = TitleViewModelFactory(dataSource, application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(TitleViewModel::class.java)
 
@@ -43,9 +35,8 @@ class TitleFragment : Fragment() {
         binding.list.adapter = adapter
         //binding.list.layoutManager = LinearLayoutManager(context)
 
-        viewModel._nights.observe(viewLifecycleOwner, Observer {
+        viewModel._languageAndLangToLang.observe(viewLifecycleOwner, Observer {
             adapter.data = it
-            Log.i("wtf", "xd")
             adapter.notifyDataSetChanged()
         })
 

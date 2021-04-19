@@ -33,8 +33,9 @@ class FlashcardsAdapter(val context: Context): RecyclerView.Adapter<FlashcardsAd
         holder.bind(data[position])
 
         holder.itemView.setOnClickListener{
-            //Toast.makeText(context, data[position].word, Toast.LENGTH_SHORT).show()
-            //Navigation.findNavController(holder.itemView).navigate(FlashcardsFragmentDirections.actionFlashcardsFragmentToAddEditFlashcardFragment(data[position].flashcardId))
+            Navigation.findNavController(holder.itemView)
+                .navigate(FlashcardsFragmentDirections
+                .actionFlashcardsFragmentToFlashcardDetailsFragment(data[position].flashcardId))
         }
     }
 

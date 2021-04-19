@@ -1,7 +1,10 @@
 package com.example.fiszkiapp.AddEditFlashcard
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -13,6 +16,7 @@ import androidx.navigation.ui.NavigationUI
 import com.example.fiszkiapp.R
 import com.example.fiszkiapp.database.FiszkiDatabase
 import com.example.fiszkiapp.database.Flashcard
+import com.example.fiszkiapp.database.FlashcardAndTopic
 import com.example.fiszkiapp.databinding.FragmentAddEditFlashcardBinding
 
 class AddEditFlashcardFragment: Fragment() {
@@ -22,7 +26,7 @@ class AddEditFlashcardFragment: Fragment() {
 
     var flashcardId: Int = 0
     var topicId: Int = 0
-    var flashcard: Flashcard = Flashcard("","", 0)
+    var flashcard: FlashcardAndTopic? = null//Flashcard("","", 0)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +40,7 @@ class AddEditFlashcardFragment: Fragment() {
         flashcardId = AddEditFlashcardFragmentArgs.fromBundle(arguments!!).flashcardId
         topicId = AddEditFlashcardFragmentArgs.fromBundle(arguments!!).topicId
 
+
         viewModelFactory = AddEditFlashcardViewModelFactory(dataSource, application, flashcardId, topicId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(AddEditFlashcardViewModel::class.java)
 
@@ -43,21 +48,29 @@ class AddEditFlashcardFragment: Fragment() {
 
         //binding.textView.text = viewModel.flashcard.value?.word
 
-        viewModel.flashcard?.observe(viewLifecycleOwner, Observer {
+        viewModel.flashcardAndTopic?.observe(viewLifecycleOwner, Observer {
             flashcard = it
-            binding.textView.text = it.word
+            binding.wordTextEdit.setText(it.flashcard.word)
+            binding.translationTextEdit.setText(it.flashcard.translation)
         })
 
-        binding.addEditFloatingButton.setOnClickListener {
-            if (flashcardId == -1){
-                val wordText = binding.wordTextEdit.text.toString()
-                val translateText = binding.translationTextEdit.text.toString()
-                if(wordText.length == 0 || translateText.length == 0)
-                    Toast.makeText(context, "Empty EditText", Toast.LENGTH_SHORT).show()
-                else{
+        binding.addEditDoneFloatingButton.setOnClickListener {
+            val wordText = binding.wordTextEdit.text.toString()
+            val translateText = binding.translationTextEdit.text.toString()
+            if(wordText.length == 0 || translateText.length == 0)
+                Toast.makeText(context, getString(R.string.empty_field), Toast.LENGTH_SHORT).show()
+            else{
+                if (flashcardId == -1)
                     viewModel.addFlashcard(wordText, translateText)
-                    Navigation.findNavController(it).navigateUp()
+                else {
+                    viewModel.updateFlashcard(flashcardId, wordText, translateText)
                 }
+                activity?.currentFocus?.let { view ->
+                    val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(view.windowToken, 0)
+                }
+                Navigation.findNavController(it).navigateUp()
+
             }
         }
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="translate">Przetłumacz</string>
+    <string name="new_topic">Nowa kategoria</string>
+    <string name="add">Dodaj</string>
+    <string name="new_name">nowa nazwa</string>
+    <string name="delete_a_topic">Usuń kategorię</string>
+    <string name="rename_a_topic">Zmień nazwę kategorii</string>
+    <string name="empty_field">Puste pole/a</string>
+</resources>

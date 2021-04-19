@@ -23,6 +23,7 @@
             android:id="@+id/add_flashcard_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:tint="@android:color/white"
             android:layout_margin="16dp"
             android:src="@drawable/outline_add_black_48"
             app:layout_constraintBottom_toBottomOf="parent"

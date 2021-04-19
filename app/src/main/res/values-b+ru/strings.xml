@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="translate">Translate</string>
+    <string name="new_topic">new topic</string>
+    <string name="add">ADD</string>
+    <string name="new_name">new name</string>
+    <string name="delete_a_topic">Delete a topic</string>
+    <string name="rename_a_topic">Rename a topic</string>
+    <string name="empty_field">Empty field(s)</string>
+</resources>

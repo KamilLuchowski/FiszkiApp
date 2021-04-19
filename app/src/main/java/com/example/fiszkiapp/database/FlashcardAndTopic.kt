@@ -4,10 +4,10 @@ import androidx.room.Embedded
 import androidx.room.Relation
 
 data class FlashcardAndTopic(
-    @Embedded val topic: Topic,
+    @Embedded val flashcard: Flashcard,
     @Relation(
-        parentColumn = "topicId",
-        entityColumn = "flashcardId"
+        parentColumn = "flashcardTopic",
+        entityColumn = "topicId"
     )
-    val flashcards: List<Flashcard>
+    val topic: Topic
 )

@@ -41,7 +41,8 @@ class FlashcardsFragment: Fragment() {
         viewModelFactory = FlashcardsViewModelFactory(dataSource, application, topicId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(FlashcardsViewModel::class.java)
 
-        val binding : FragmentFlashcardsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_flashcards, container, false)
+        val binding : FragmentFlashcardsBinding = DataBindingUtil
+            .inflate(inflater, R.layout.fragment_flashcards, container, false)
 
         val adapter = FlashcardsAdapter(application.applicationContext)
         binding.listFlashcards.adapter = adapter
@@ -49,7 +50,9 @@ class FlashcardsFragment: Fragment() {
         setHasOptionsMenu(true)
 
         binding.addFlashcardButton.setOnClickListener {
-            Navigation.findNavController(it).navigate(FlashcardsFragmentDirections.actionFlashcardsFragmentToAddEditFlashcardFragment(-1, topicId))
+            Navigation.findNavController(it)
+                .navigate(FlashcardsFragmentDirections
+                    .actionFlashcardsFragmentToAddEditFlashcardFragment(-1, topicId))
         }
 
         viewModel.flashcards.observe(viewLifecycleOwner, Observer {
@@ -66,11 +69,15 @@ class FlashcardsFragment: Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.topic_delete){
-            deleteTopic()
-        }
-        else if(item.itemId == R.id.topic_rename){
-            renameTopic()
+        when (item.itemId) {
+            R.id.topic_delete -> {
+                deleteTopic()
+            }
+            R.id.topic_rename -> {
+                renameTopic()
+            }
+            android.R.id.home ->
+                findNavController().navigateUp()
         }
         return true
     }

@@ -35,6 +35,9 @@
             android:name="topic"
             app:argType="integer" />
         <action
+            android:id="@+id/action_flashcardsFragment_to_flashcardDetailsFragment"
+            app:destination="@id/flashcardDetailsFragment" />
+        <action
             android:id="@+id/action_flashcardsFragment_to_addEditFlashcardFragment"
             app:destination="@id/addEditFlashcardFragment" />
     </fragment>
@@ -48,5 +51,16 @@
         <argument
             android:name="topicId"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/flashcardDetailsFragment"
+        android:name="com.example.fiszkiapp.FlashcardDetails.FlashcardDetailsFragment"
+        android:label="FlashcardDetailsFragment" >
+        <argument
+            android:name="flashcardId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_flashcardDetailsFragment_to_addEditFlashcardFragment"
+            app:destination="@id/addEditFlashcardFragment" />
     </fragment>
 </navigation>

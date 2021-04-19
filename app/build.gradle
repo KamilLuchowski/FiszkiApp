@@ -33,6 +33,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation 'androidx.room:room-ktx:2.2.6'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     kapt "androidx.room:room-compiler:2.2.6"
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version_kotlin"

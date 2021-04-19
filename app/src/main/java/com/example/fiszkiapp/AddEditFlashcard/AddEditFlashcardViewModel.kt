@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.fiszkiapp.database.FiszkiDatabaseDao
 import com.example.fiszkiapp.database.Flashcard
+import com.example.fiszkiapp.database.FlashcardAndTopic
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
@@ -17,6 +18,10 @@ class AddEditFlashcardViewModel(val dataSource: FiszkiDatabaseDao, application: 
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.IO + viewModelJob)
+
+    private var _flashcardAndTopic: LiveData<FlashcardAndTopic>? = null
+    val flashcardAndTopic
+        get() = _flashcardAndTopic
 
     private var _flashcard: LiveData<Flashcard>? = null
     val flashcard
@@ -29,15 +34,12 @@ class AddEditFlashcardViewModel(val dataSource: FiszkiDatabaseDao, application: 
 
     init {
         if(flashcardId == -1){
-            Toast
-                .makeText(application.applicationContext, "Dupaaaaaa", Toast.LENGTH_SHORT)
-                .show()
             //new flashcard
         }
         else{
+            _flashcardAndTopic = dataSource.getFlashcardandTopic(flashcardId)
             _flashcard = dataSource.getFlashcard(flashcardId)
             uiScope.launch {
-
             }
         }
     }
@@ -52,6 +54,11 @@ class AddEditFlashcardViewModel(val dataSource: FiszkiDatabaseDao, application: 
         CoroutineScope(IO).launch {
             dataSource.insertFlashcard(Flashcard(wordText, translateText, topicId))
         }
+    }
 
+    fun updateFlashcard(flashcardId: Int, wordText: String, translateText: String) {
+        CoroutineScope(IO).launch {
+            dataSource.updateFlashcard(flashcardId, wordText, translateText)
+        }
     }
 }

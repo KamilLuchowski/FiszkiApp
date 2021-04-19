@@ -30,8 +30,6 @@ class FlashcardsViewModel(val dataSource: FiszkiDatabaseDao, application: Applic
     init {
         _flashcards = dataSource.getFlashcards(topicId)
         uiScope.launch {
-            Log.i("ttt", topicId.toString())
-
         }
     }
 

@@ -1,7 +1,6 @@
 package com.example.fiszkiapp.TitleFragment
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.fiszkiapp.database.FiszkiDatabaseDao
@@ -15,9 +14,9 @@ class TitleViewModel(val dataSource: FiszkiDatabaseDao, application: Application
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
-    var _nights: LiveData<List<LanguageAndLangToLang>>
-    val nights
-        get() = _nights
+    var _languageAndLangToLang: LiveData<List<LanguageAndLangToLang>>
+    val languageAndLangToLang
+        get() = _languageAndLangToLang
 
     override fun onCleared() {
         super.onCleared()
@@ -26,7 +25,7 @@ class TitleViewModel(val dataSource: FiszkiDatabaseDao, application: Application
 
     init {
         getDataFromDatabase()
-        _nights = dataSource.getLang2Langs()
+        _languageAndLangToLang = dataSource.getLang2Langs()
     }
 
     private fun getDataFromDatabase() {
