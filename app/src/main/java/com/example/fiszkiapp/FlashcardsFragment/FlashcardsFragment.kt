@@ -55,6 +55,12 @@ class FlashcardsFragment: Fragment() {
                     .actionFlashcardsFragmentToAddEditFlashcardFragment(-1, topicId))
         }
 
+        binding.playButton.setOnClickListener {
+            Navigation.findNavController(it)
+                .navigate(FlashcardsFragmentDirections
+                    .actionFlashcardsFragmentToLearningFragment(topicId))
+        }
+
         viewModel.flashcards.observe(viewLifecycleOwner, Observer {
             adapter.data = it
             adapter.notifyDataSetChanged()

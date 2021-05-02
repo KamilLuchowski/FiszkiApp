@@ -7,4 +7,7 @@
     <string name="delete_a_topic">Usuń kategorię</string>
     <string name="rename_a_topic">Zmień nazwę kategorii</string>
     <string name="empty_field">Puste pole/a</string>
+    <string name="polish">polski</string>
+    <string name="english">angielski</string>
+    <string name="russian">rosyjski</string>
 </resources>

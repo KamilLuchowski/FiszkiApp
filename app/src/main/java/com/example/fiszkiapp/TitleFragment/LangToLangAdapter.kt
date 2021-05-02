@@ -1,17 +1,14 @@
 package com.example.fiszkiapp.TitleFragment
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
-import android.util.Log
+import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fiszkiapp.LangToLangDictionary
 import com.example.fiszkiapp.R
 import com.example.fiszkiapp.database.LanguageAndLangToLang
 
@@ -28,7 +25,7 @@ class LangToLangAdapter(val context: Context): RecyclerView.Adapter<LangToLangAd
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.bind(data[position])
+        holder.bind(data[position], context)
         holder.itemView.setOnClickListener{
             Navigation
                 .findNavController(holder.itemView)
@@ -38,13 +35,12 @@ class LangToLangAdapter(val context: Context): RecyclerView.Adapter<LangToLangAd
 
     class ViewHolder private constructor(itemView : View): RecyclerView.ViewHolder(itemView){
 
-        fun bind(item: LanguageAndLangToLang) {
-            text1.text = item.language1.name
-            text2.text = item.language2.name
+        fun bind(item: LanguageAndLangToLang, context: Context) {
+
+            text1.text  = context.getString(LangToLangDictionary.langName[item.language2.languageId].second)
         }
 
         val text1: TextView = itemView.findViewById(R.id.lang1)
-        val text2: TextView = itemView.findViewById(R.id.lang2)
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)

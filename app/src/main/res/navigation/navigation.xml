@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_flashcardsFragment_to_addEditFlashcardFragment"
             app:destination="@id/addEditFlashcardFragment" />
+        <action
+            android:id="@+id/action_flashcardsFragment_to_learningFragment"
+            app:destination="@id/learningFragment" />
     </fragment>
     <fragment
         android:id="@+id/addEditFlashcardFragment"
@@ -62,5 +65,13 @@
         <action
             android:id="@+id/action_flashcardDetailsFragment_to_addEditFlashcardFragment"
             app:destination="@id/addEditFlashcardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/learningFragment"
+        android:name="com.example.fiszkiapp.LearningFragment.LearningFragment"
+        android:label="LearningFragment" >
+        <argument
+            android:name="topicId"
+            app:argType="integer" />
     </fragment>
 </navigation>

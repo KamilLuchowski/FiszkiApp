@@ -7,4 +7,7 @@
     <string name="delete_a_topic">Delete a topic</string>
     <string name="rename_a_topic">Rename a topic</string>
     <string name="empty_field">Empty field(s)</string>
+    <string name="polish">polish</string>
+    <string name="english">english</string>
+    <string name="russian">russian</string>
 </resources>
