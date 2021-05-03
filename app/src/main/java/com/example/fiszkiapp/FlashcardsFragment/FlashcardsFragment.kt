@@ -25,7 +25,8 @@ class FlashcardsFragment: Fragment() {
     private lateinit var viewModel : FlashcardsViewModel
     private lateinit var viewModelFactory: FlashcardsViewModelFactory
 
-   var topicId: Int = -1
+    var topicId: Int = -1
+    var langToLangId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +38,7 @@ class FlashcardsFragment: Fragment() {
         val dataSource = FiszkiDatabase.getInstance(application).fiszkiDatabaseDao
 
         topicId = FlashcardsFragmentArgs.fromBundle(arguments!!).topic
+        langToLangId = FlashcardsFragmentArgs.fromBundle(arguments!!).langToLang
 
         viewModelFactory = FlashcardsViewModelFactory(dataSource, application, topicId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(FlashcardsViewModel::class.java)
@@ -44,7 +46,7 @@ class FlashcardsFragment: Fragment() {
         val binding : FragmentFlashcardsBinding = DataBindingUtil
             .inflate(inflater, R.layout.fragment_flashcards, container, false)
 
-        val adapter = FlashcardsAdapter(application.applicationContext)
+        val adapter = FlashcardsAdapter(application.applicationContext, langToLangId)
         binding.listFlashcards.adapter = adapter
         binding.listFlashcards.layoutManager = LinearLayoutManager(context)
         setHasOptionsMenu(true)

@@ -1,21 +1,22 @@
 package com.example.fiszkiapp.LearningFragment
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.example.fiszkiapp.R
 import com.example.fiszkiapp.database.FiszkiDatabase
 import com.example.fiszkiapp.databinding.FragmentLearningBinding
 
 
-class LearningFragment: Fragment() {
+class LearningFragment : Fragment() {
 
-    private lateinit var viewModel : LearningViewModel
+    private lateinit var viewModel: LearningViewModel
     private lateinit var viewModelFactory: LearningViewModelFactory
 
     override fun onCreateView(
@@ -32,18 +33,70 @@ class LearningFragment: Fragment() {
         viewModelFactory = LearningViewModelFactory(dataSource, application, topicId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(LearningViewModel::class.java)
 
-        val binding : FragmentLearningBinding = DataBindingUtil
+        val binding: FragmentLearningBinding = DataBindingUtil
             .inflate(inflater, R.layout.fragment_learning, container, false)
 
         viewModel.flashcards.observe(viewLifecycleOwner, Observer {
-            viewModel.randList()
+            viewModel.randomList()
+            bind(inflater, container, binding)
         })
 
         binding.showAnswerButton.setOnClickListener {
-            binding.learningTranslation.visibility = View.VISIBLE
-            binding.floatingActionButton.visibility = View.VISIBLE
+            translationVisible(binding)
+        }
+
+
+
+        binding.iDidntKnowButton.setOnClickListener {
+            translationInvisible(binding)
+            viewModel.iterator++
+            if (viewModel.iterator < viewModel.flashcardsSize) {
+                bind(inflater, container, binding)
+            } else {
+                viewModel.iterations++
+                if (viewModel.iterations == 2) {
+                    //zapisz do toRepeat
+                }
+                viewModel.iterator = 0
+                bind(inflater, container, binding)
+            }
+        }
+
+        binding.iKnewItButton.setOnClickListener {
+            translationInvisible(binding)
+            viewModel._randomFlashcards?.removeAt(viewModel.iterator)
+            viewModel.flashcardsSize = viewModel.randomFlashcards?.size!!
+
+            if (viewModel.flashcardsSize == 0) {
+                Navigation.findNavController(it)
+                    .navigate(LearningFragmentDirections.actionLearningFragmentToLearningFinishedFragment())
+                return@setOnClickListener
+            }
+            if (viewModel.iterator == viewModel.flashcardsSize)
+                viewModel.iterator = 0
+
+            bind(inflater, container, binding)
         }
 
         return binding.root
+    }
+
+    private fun translationVisible(binding: FragmentLearningBinding) {
+        binding.learningTranslation.visibility = View.VISIBLE
+        binding.floatingActionButton.visibility = View.VISIBLE
+    }
+    private fun translationInvisible(binding: FragmentLearningBinding) {
+        binding.learningTranslation.visibility = View.INVISIBLE
+        binding.floatingActionButton.visibility = View.INVISIBLE
+    }
+
+    private fun bind(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        binding: FragmentLearningBinding
+    ) {
+        binding.learningWord.text = viewModel.randomFlashcards?.get(viewModel.iterator)?.word
+        binding.learningTranslation.text =
+            viewModel.randomFlashcards?.get(viewModel.iterator)?.translation
     }
 }

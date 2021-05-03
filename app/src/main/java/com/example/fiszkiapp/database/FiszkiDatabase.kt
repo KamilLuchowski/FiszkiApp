@@ -26,28 +26,7 @@ abstract class FiszkiDatabase : RoomDatabase(){
                         context.applicationContext,
                         FiszkiDatabase::class.java,
                         "fiszki_database"
-                    )
-                            .addCallback(object : RoomDatabase.Callback() {
-                                override fun onCreate(db: SupportSQLiteDatabase) {
-                                    super.onCreate(db)
-                                    //pre-populate data
-                                    Executors.newSingleThreadExecutor().execute {
-                                        instance?.let {
-                                            it.fiszkiDatabaseDao.insertLanguage(Language(0, "polish", "pl"))
-                                            it.fiszkiDatabaseDao.insertLanguage(Language(1, "english", "en"))
-                                            it.fiszkiDatabaseDao.insertLanguage(Language(2, "russian", "ru"))
-
-                                            it.fiszkiDatabaseDao.insertLangToLang(LangToLang(0, 0, 1))
-                                            it.fiszkiDatabaseDao.insertLangToLang(LangToLang(1, 0, 2))
-                                            it.fiszkiDatabaseDao.insertLangToLang(LangToLang(2, 1, 0))
-                                            it.fiszkiDatabaseDao.insertLangToLang(LangToLang(3, 1, 2))
-                                            it.fiszkiDatabaseDao.insertLangToLang(LangToLang(4, 2, 0))
-                                            it.fiszkiDatabaseDao.insertLangToLang(LangToLang(5, 2, 1))
-                                        }
-                                    }
-                                }
-                            }
-                            ).fallbackToDestructiveMigration()
+                    ).fallbackToDestructiveMigration()
                             .build()
                     INSTANCE = instance
                 }

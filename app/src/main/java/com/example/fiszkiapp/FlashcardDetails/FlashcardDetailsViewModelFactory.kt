@@ -10,13 +10,15 @@ import com.example.fiszkiapp.database.FiszkiDatabaseDao
 class FlashcardDetailsViewModelFactory(
     private val dataSource: FiszkiDatabaseDao,
     private val application: Application,
-    private val flashcardId: Int
+    private val flashcardId: Int,
+    private val langtoLangId: Int
+
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         @Suppress("unchecked_cast")
         if (modelClass.isAssignableFrom(FlashcardDetailsViewModel::class.java)) {
-            return FlashcardDetailsViewModel(dataSource, application, flashcardId) as T
+            return FlashcardDetailsViewModel(dataSource, application, flashcardId, langtoLangId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

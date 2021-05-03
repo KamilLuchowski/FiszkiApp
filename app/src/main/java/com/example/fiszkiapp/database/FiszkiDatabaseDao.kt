@@ -18,22 +18,22 @@ interface FiszkiDatabaseDao {
     @Query("SELECT * from language_table WHERE languageId =:key")
      suspend fun getLanguage(key: Int): Language?
 
-    @Query("DELETE FROM language_table")
-     suspend fun clearLang()
+//    @Query("DELETE FROM language_table")
+//     suspend fun clearLang()
 
-    @Query("DELETE FROM langToLang_table")
-    suspend fun clearLangToLang()
+//    @Query("DELETE FROM langToLang_table")
+//    suspend fun clearLangToLang()
 
     @Query("SELECT * FROM langToLang_table")
-    fun getAllNights(): LiveData<List<LangToLang>>
+    fun getLangToLangs(): LiveData<List<LangToLang>>
 
     @Transaction
     @Query("SELECT * FROM langToLang_table")
-    fun getLang2Langs(): LiveData<List<LanguageAndLangToLang>>
+    fun getLanguageAndLangToLang(): LiveData<List<LanguageAndLangToLang>>
 
     @Transaction
     @Query("SELECT * FROM topic_table WHERE topicLang2Lang =:key")
-    fun getUsersWithPlaylists(key: Int): LiveData<List<Topic>>
+    fun getTopics(key: Int): LiveData<List<Topic>>
 
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTopic(topic: Topic)
@@ -68,6 +68,11 @@ interface FiszkiDatabaseDao {
     @Query(
         "UPDATE flashcard_table SET word=:newWord, translation=:newTranslation WHERE flashcardId=:key")
      suspend fun updateFlashcard(key: Int, newWord: String, newTranslation: String)
+
+    @Transaction
+    @Query(
+        "UPDATE flashcard_table SET flashcardTopic=:topicId WHERE flashcardId=:key")
+    suspend fun updateFlashcardTopic(key: Int, topicId: Int)
 
 }
 

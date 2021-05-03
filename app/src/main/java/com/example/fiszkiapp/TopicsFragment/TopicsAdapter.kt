@@ -19,7 +19,7 @@ import com.example.fiszkiapp.database.Topic
 import kotlin.contracts.contract
 
 
-class TopicsAdapter(var context: Context): RecyclerView.Adapter<TopicsAdapter.ViewHolder>() {
+class TopicsAdapter(var context: Context, var langToLang: Int): RecyclerView.Adapter<TopicsAdapter.ViewHolder>() {
 
     var data = listOf<Topic>()
 
@@ -36,7 +36,7 @@ class TopicsAdapter(var context: Context): RecyclerView.Adapter<TopicsAdapter.Vi
         holder.itemView.setOnClickListener{
             Navigation
                 .findNavController(holder.itemView)
-                .navigate(TopicsFragmentDirections.actionTopicsFragmentToFlashcardsFragment(data[position].topicId))
+                .navigate(TopicsFragmentDirections.actionTopicsFragmentToFlashcardsFragment(data[position].topicId, langToLang))
         }
     }
 

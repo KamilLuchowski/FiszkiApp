@@ -1,11 +1,9 @@
 package com.example.fiszkiapp.TopicsFragment
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.fiszkiapp.database.FiszkiDatabaseDao
-import com.example.fiszkiapp.database.LangToLangAndTopic
 import com.example.fiszkiapp.database.Topic
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +32,7 @@ class TopicsViewModel(val dataSource: FiszkiDatabaseDao, application: Applicatio
     }
 
     private fun func() {
-        _langToLangAndTopic = dataSource.getUsersWithPlaylists(langToLangId)
+        _langToLangAndTopic = dataSource.getTopics(langToLangId)
     }
 
     fun insertTopic(topic: Topic){

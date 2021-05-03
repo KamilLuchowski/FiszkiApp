@@ -25,7 +25,7 @@ class TitleViewModel(val dataSource: FiszkiDatabaseDao, application: Application
 
     init {
         getDataFromDatabase()
-        _languageAndLangToLang = dataSource.getLang2Langs()
+        _languageAndLangToLang = dataSource.getLanguageAndLangToLang()
     }
 
     private fun getDataFromDatabase() {
@@ -35,7 +35,7 @@ class TitleViewModel(val dataSource: FiszkiDatabaseDao, application: Application
     }
 
     private suspend fun func() {
-        dataSource.getLang2Langs()
+        dataSource.getLanguageAndLangToLang()
         dataSource.insertTopic(Topic( "Podróże", 0))
         dataSource.insertTopic(Topic( "Kuchnia", 0))
         dataSource.insertTopic(Topic( "Dom", 0))

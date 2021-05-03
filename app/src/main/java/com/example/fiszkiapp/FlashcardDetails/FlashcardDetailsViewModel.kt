@@ -2,6 +2,7 @@ package com.example.fiszkiapp.FlashcardDetails
 
 import android.app.Application
 import android.util.Log
+import android.widget.Spinner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.fiszkiapp.database.FiszkiDatabaseDao
@@ -14,10 +15,15 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class FlashcardDetailsViewModel(val dataSource: FiszkiDatabaseDao, application: Application, val flashcardId: Int): ViewModel() {
+class FlashcardDetailsViewModel(val dataSource: FiszkiDatabaseDao, application: Application, val flashcardId: Int, langtoLangId: Int): ViewModel() {
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.IO + viewModelJob)
+
+
+    var _langToLangAndTopic: LiveData<List<Topic>>
+    val langToLangAndTopic
+        get() = _langToLangAndTopic
 
     private var _flashcardAndTopic: LiveData<FlashcardAndTopic>
     val flashcardAndTopic
@@ -30,13 +36,21 @@ class FlashcardDetailsViewModel(val dataSource: FiszkiDatabaseDao, application: 
 
     init {
         _flashcardAndTopic = dataSource.getFlashcardandTopic(flashcardId)
-        uiScope.launch {
-        }
+        _langToLangAndTopic = dataSource.getTopics(langtoLangId)
     }
 
     fun deleteFlashcard(key: Int){
        uiScope.launch {
            dataSource.deleteFlashcard(key)
        }
+    }
+
+    fun updateTopic(key: Int, dropdown: Spinner){
+        uiScope.launch {
+            val newTopic = _langToLangAndTopic.value?.get(dropdown.selectedItemPosition)?.topicId
+            if (newTopic != null) {
+                dataSource.updateFlashcardTopic(flashcardId, newTopic)
+            }
+        }
     }
 }

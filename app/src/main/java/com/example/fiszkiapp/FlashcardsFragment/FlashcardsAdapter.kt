@@ -17,7 +17,7 @@ import com.example.fiszkiapp.database.Flashcard
 import com.example.fiszkiapp.database.LanguageAndLangToLang
 import com.example.fiszkiapp.database.Topic
 
-class FlashcardsAdapter(val context: Context): RecyclerView.Adapter<FlashcardsAdapter.ViewHolder>(){
+class FlashcardsAdapter(val context: Context, var langToLangId: Int): RecyclerView.Adapter<FlashcardsAdapter.ViewHolder>(){
 
     var data = listOf<Flashcard>()
 
@@ -35,7 +35,7 @@ class FlashcardsAdapter(val context: Context): RecyclerView.Adapter<FlashcardsAd
         holder.itemView.setOnClickListener{
             Navigation.findNavController(holder.itemView)
                 .navigate(FlashcardsFragmentDirections
-                .actionFlashcardsFragmentToFlashcardDetailsFragment(data[position].flashcardId))
+                .actionFlashcardsFragmentToFlashcardDetailsFragment(data[position].flashcardId, langToLangId))
         }
     }
 

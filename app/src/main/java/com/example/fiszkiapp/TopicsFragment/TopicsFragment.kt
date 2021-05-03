@@ -40,7 +40,7 @@ class TopicsFragment : Fragment() {
         viewModelFactory = TopicsViewModelFactory(dataSource, application, langTolangId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(TopicsViewModel::class.java)
 
-        val adapter = TopicsAdapter(application.applicationContext)
+        val adapter = TopicsAdapter(application.applicationContext, langTolangId)
         val view = inflater.inflate(R.layout.fragment_topics, container,  false)
         val aaa = view.findViewById<RecyclerView>(R.id.topics_list)
 

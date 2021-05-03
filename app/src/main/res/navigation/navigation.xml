@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_flashcardsFragment_to_learningFragment"
             app:destination="@id/learningFragment" />
+        <argument
+            android:name="langToLang"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/addEditFlashcardFragment"
@@ -65,6 +68,9 @@
         <action
             android:id="@+id/action_flashcardDetailsFragment_to_addEditFlashcardFragment"
             app:destination="@id/addEditFlashcardFragment" />
+        <argument
+            android:name="langToLang"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/learningFragment"
@@ -73,5 +79,13 @@
         <argument
             android:name="topicId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_learningFragment_to_learningFinishedFragment"
+            app:destination="@id/learningFinishedFragment"
+            app:popUpTo="@id/flashcardsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/learningFinishedFragment"
+        android:name="com.example.fiszkiapp.LearningFinished.LearningFinishedFragment"
+        android:label="LearningFinishedFragment" />
 </navigation>

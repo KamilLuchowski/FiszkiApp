@@ -9,7 +9,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:animateLayoutChanges="true"
+
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -60,7 +60,7 @@
             app:layout_constraintTop_toBottomOf="@+id/learning_translation" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/i_knew_it_button"
             style="@style/buttonStyle"
             android:layout_width="0dp"
             android:layout_height="70dp"
@@ -70,10 +70,10 @@
             app:backgroundTint="#8BC34A"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button5" />
+            app:layout_constraintStart_toEndOf="@+id/i_didnt_know_button" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/i_didnt_know_button"
             style="@style/buttonStyle"
             android:layout_width="0dp"
             android:layout_height="70dp"
@@ -83,7 +83,7 @@
             android:text="I didn't know"
             app:backgroundTint="#E91E63"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button3"
+            app:layout_constraintEnd_toStartOf="@+id/i_knew_it_button"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
