@@ -1,22 +1,20 @@
 package com.example.fiszkiapp.TitleFragment
 
 import android.R.layout
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.ListAdapter
 import com.example.fiszkiapp.LangToLangDictionary
 import com.example.fiszkiapp.R
-import com.example.fiszkiapp.R.layout.*
+import com.example.fiszkiapp.R.layout.fragment_title
 import com.example.fiszkiapp.database.FiszkiDatabase
 import com.example.fiszkiapp.databinding.FragmentTitleBinding
 
@@ -30,7 +28,7 @@ class TitleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        activity?.title = "Your actionbar title"
         val application = requireNotNull(this.activity).application
         val dataSource = FiszkiDatabase.getInstance(application).fiszkiDatabaseDao
 
@@ -42,9 +40,7 @@ class TitleFragment : Fragment() {
         val adapter = LangToLangAdapter(application.applicationContext)
         binding.list.adapter = adapter
         //binding.list.layoutManager = LinearLayoutManager(context)
-
-
-
+        setHasOptionsMenu(true)
 
         val dropdown: Spinner = binding.spinner1
 
@@ -87,5 +83,28 @@ class TitleFragment : Fragment() {
         }
 
         adapter.notifyDataSetChanged()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.title_overflow_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.export_import_info -> {
+                exportImportInfo()
+            }
+        }
+        return true
+    }
+
+    private fun exportImportInfo() {
+        val alertDialog: AlertDialog = AlertDialog.Builder(context).create()
+        alertDialog.setTitle(R.string.export_import_info)
+        alertDialog.setMessage(getString(R.string.export_import_description))
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK"
+        ) { dialog, _ -> dialog.dismiss() }
+        alertDialog.show()
     }
 }

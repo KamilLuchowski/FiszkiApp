@@ -13,10 +13,12 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fiszkiapp.R
+import com.example.fiszkiapp.TitleFragment.TitleFragmentDirections
 import com.example.fiszkiapp.database.FiszkiDatabase
 import com.example.fiszkiapp.database.Topic
 
@@ -31,7 +33,7 @@ class TopicsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        activity?.title = "dupaaaaaaaaaa"
         val application = requireNotNull(this.activity).application
         val dataSource = FiszkiDatabase.getInstance(application).fiszkiDatabaseDao
 
@@ -80,6 +82,14 @@ class TopicsFragment : Fragment() {
                 editText.text.clear()
             }
         }
+
+        view.findViewById<Button>(R.id.playToRepeatButton).setOnClickListener {
+                Navigation
+                    .findNavController(it)
+                    .navigate(TopicsFragmentDirections.actionTopicsFragmentToToRepeatFragment(langTolangId))
+        }
+
+
 
         return view
     }

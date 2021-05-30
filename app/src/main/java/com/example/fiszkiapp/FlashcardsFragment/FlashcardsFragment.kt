@@ -1,8 +1,10 @@
 package com.example.fiszkiapp.FlashcardsFragment
 
 import android.app.AlertDialog
-import android.content.ClipData
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.speech.tts.TextToSpeech.OnInitListener
+import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.Toast
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fiszkiapp.R
 import com.example.fiszkiapp.database.FiszkiDatabase
 import com.example.fiszkiapp.databinding.FragmentFlashcardsBinding
+import java.util.*
 
 
 class FlashcardsFragment: Fragment() {
@@ -57,23 +60,28 @@ class FlashcardsFragment: Fragment() {
                     .actionFlashcardsFragmentToAddEditFlashcardFragment(-1, topicId))
         }
 
-        binding.playButton.setOnClickListener {
-            Navigation.findNavController(it)
-                .navigate(FlashcardsFragmentDirections
-                    .actionFlashcardsFragmentToLearningFragment(topicId))
-        }
-
         viewModel.flashcards.observe(viewLifecycleOwner, Observer {
             adapter.data = it
             adapter.notifyDataSetChanged()
         })
+
+        binding.playButton.setOnClickListener {
+            if (viewModel.flashcards.value?.size == 0)
+                Toast.makeText(context, "No flashcards", Toast.LENGTH_SHORT).show()
+            else
+                Navigation.findNavController(it)
+                    .navigate(FlashcardsFragmentDirections
+                        .actionFlashcardsFragmentToLearningFragment(topicId, langToLangId))
+        }
+
+
 
         return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.overflow_menu, menu)
+        inflater.inflate(R.menu.flashcards_overflow_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

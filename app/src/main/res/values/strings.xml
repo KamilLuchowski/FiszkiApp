@@ -10,4 +10,17 @@
     <string name="polish">polish</string>
     <string name="english">english</string>
     <string name="russian">russian</string>
+    <string name="export_import_info">Export/Import Info</string>
+    <string name="export_import_description">If you want to save your data or move to another
+        device: /n
+        Open your favorite file explorer and go to FiszkiApp folder.
+        Copy "database" folder and put it in a save place. /n
+        To import data just go to "FiszkiApp" folder and replace "database folder there.</string>
+    <string name="flashcard_edit">Flashcard Edit</string>
+    <string name="topics">Topics</string>
+    <string name="flashcards">Flashcards</string>
+    <string name="flashcard_details">Flashcard Details</string>
+    <string name="to_repeat">Repeat it</string>
+    <string name="learning">Learning</string>
+    <string name="learning_finished">Finished</string>
 </resources>

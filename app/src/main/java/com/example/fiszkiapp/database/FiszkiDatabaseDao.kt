@@ -74,6 +74,21 @@ interface FiszkiDatabaseDao {
         "UPDATE flashcard_table SET flashcardTopic=:topicId WHERE flashcardId=:key")
     suspend fun updateFlashcardTopic(key: Int, topicId: Int)
 
+    @Insert (onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFlashcardToRepeat(toRepeat: ToRepeat)
+
+    @Transaction
+    @Query("SELECT * FROM torepeat_table WHERE langToLangId =:langToLangId")
+    fun getFlashcardFromToRepeat(langToLangId: Int): LiveData<List<ToRepeat>>
+
+
+    @Query("DELETE FROM torepeat_table WHERE flashcardId=:key")
+    fun deleteToRepeatFlashcard(key: Int)
+
+
+    @Transaction
+    @Query("SELECT * FROM flashcard_table WHERE flashcardId IN (SELECT flashcardId from torepeat_table WHERE langToLangId =:langToLangId)")
+    fun gegege(langToLangId: Int): LiveData<List<Flashcard>>
 }
 
 

@@ -1,9 +1,7 @@
 package com.example.fiszkiapp.LearningFragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -29,8 +27,9 @@ class LearningFragment : Fragment() {
         val dataSource = FiszkiDatabase.getInstance(application).fiszkiDatabaseDao
 
         val topicId = LearningFragmentArgs.fromBundle(arguments!!).topicId
+        val langToLangId = LearningFragmentArgs.fromBundle(arguments!!).langToLang
 
-        viewModelFactory = LearningViewModelFactory(dataSource, application, topicId)
+        viewModelFactory = LearningViewModelFactory(dataSource, application, topicId, langToLangId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(LearningViewModel::class.java)
 
         val binding: FragmentLearningBinding = DataBindingUtil
@@ -49,14 +48,22 @@ class LearningFragment : Fragment() {
 
         binding.iDidntKnowButton.setOnClickListener {
             translationInvisible(binding)
+
+            if (viewModel.iterator < viewModel.flashcardsSize && viewModel.iterations == 2) {
+                viewModel._randomFlashcards?.get(viewModel.iterator)?.let { it1 ->
+                    viewModel.addToRepeat(
+                        it1, langToLangId
+                    )
+                }
+            }
+
             viewModel.iterator++
             if (viewModel.iterator < viewModel.flashcardsSize) {
                 bind(inflater, container, binding)
+
             } else {
                 viewModel.iterations++
-                if (viewModel.iterations == 2) {
-                    //zapisz do toRepeat
-                }
+
                 viewModel.iterator = 0
                 bind(inflater, container, binding)
             }
@@ -64,7 +71,10 @@ class LearningFragment : Fragment() {
 
         binding.iKnewItButton.setOnClickListener {
             translationInvisible(binding)
+            if (topicId == -1)
+                viewModel.deleteToRepeatFlashcard(viewModel._randomFlashcards?.get(viewModel.iterator)?.flashcardId)
             viewModel._randomFlashcards?.removeAt(viewModel.iterator)
+
             viewModel.flashcardsSize = viewModel.randomFlashcards?.size!!
 
             if (viewModel.flashcardsSize == 0) {

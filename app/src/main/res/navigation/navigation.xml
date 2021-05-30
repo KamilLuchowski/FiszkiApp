@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/titleFragment"
         android:name="com.example.fiszkiapp.TitleFragment.TitleFragment"
-        android:label="TitleFragment" >
+        android:label="@string/app_name">
         <action
             android:id="@+id/action_titleFragment_to_topicsFragment"
             app:destination="@id/topicsFragment"
@@ -17,8 +17,8 @@
     <fragment
         android:id="@+id/topicsFragment"
         android:name="com.example.fiszkiapp.TopicsFragment.TopicsFragment"
-        android:label="fragment_topics"
-        tools:layout="@layout/fragment_topics" >
+        android:label="@string/topics"
+        tools:layout="@layout/fragment_topics">
         <argument
             android:name="langToLang"
             app:argType="integer" />
@@ -26,11 +26,14 @@
             android:id="@+id/action_topicsFragment_to_flashcardsFragment"
             app:destination="@id/flashcardsFragment"
             app:popUpTo="@id/topicsFragment" />
+        <action
+            android:id="@+id/action_topicsFragment_to_toRepeatFragment"
+            app:destination="@id/toRepeatFragment" />
     </fragment>
     <fragment
         android:id="@+id/flashcardsFragment"
         android:name="com.example.fiszkiapp.FlashcardsFragment.FlashcardsFragment"
-        android:label="FlashcardsFragment" >
+        android:label="@string/flashcards">
         <argument
             android:name="topic"
             app:argType="integer" />
@@ -50,7 +53,7 @@
     <fragment
         android:id="@+id/addEditFlashcardFragment"
         android:name="com.example.fiszkiapp.AddEditFlashcard.AddEditFlashcardFragment"
-        android:label="AddEditFlashcardFragment" >
+        android:label="@string/flashcard_edit">
         <argument
             android:name="flashcardId"
             app:argType="integer" />
@@ -61,7 +64,7 @@
     <fragment
         android:id="@+id/flashcardDetailsFragment"
         android:name="com.example.fiszkiapp.FlashcardDetails.FlashcardDetailsFragment"
-        android:label="FlashcardDetailsFragment" >
+        android:label="@string/flashcard_details">
         <argument
             android:name="flashcardId"
             app:argType="integer" />
@@ -75,17 +78,34 @@
     <fragment
         android:id="@+id/learningFragment"
         android:name="com.example.fiszkiapp.LearningFragment.LearningFragment"
-        android:label="LearningFragment" >
+        android:label="@string/learning">
         <argument
             android:name="topicId"
             app:argType="integer" />
         <action
             android:id="@+id/action_learningFragment_to_learningFinishedFragment"
             app:destination="@id/learningFinishedFragment"
-            app:popUpTo="@id/flashcardsFragment" />
+            app:popUpTo="@id/topicsFragment" />
+        <argument
+            android:name="langToLang"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/learningFinishedFragment"
         android:name="com.example.fiszkiapp.LearningFinished.LearningFinishedFragment"
-        android:label="LearningFinishedFragment" />
+        android:label="@string/learning_finished" />
+    <fragment
+        android:id="@+id/toRepeatFragment"
+        android:name="com.example.fiszkiapp.toRepeatFragment.ToRepeatFragment"
+        android:label="@string/to_repeat">
+        <argument
+            android:name="langToLang"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_toRepeatFragment_to_learningFragment"
+            app:destination="@id/learningFragment" />
+        <action
+            android:id="@+id/action_toRepeatFragment_to_flashcardDetailsFragment"
+            app:destination="@id/flashcardDetailsFragment" />
+    </fragment>
 </navigation>

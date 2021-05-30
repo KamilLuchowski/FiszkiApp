@@ -6,14 +6,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.fiszkiapp.database.FiszkiDatabaseDao
 import com.example.fiszkiapp.database.Flashcard
+import com.example.fiszkiapp.database.ToRepeat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
-class LearningViewModel(val dataSource: FiszkiDatabaseDao, var application: Application, val topicId: Int): ViewModel() {
+class LearningViewModel(
+    val dataSource: FiszkiDatabaseDao,
+    var application: Application,
+    val topicId: Int,
+    langToLangId: Int
+): ViewModel() {
 
     private var viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
     private var _flashcards: LiveData<List<Flashcard>>
     val flashcards
@@ -34,7 +41,11 @@ class LearningViewModel(val dataSource: FiszkiDatabaseDao, var application: Appl
     }
 
     init {
-        _flashcards = dataSource.getFlashcards(topicId)
+        if (topicId == -1) {
+            _flashcards = dataSource.gegege(langToLangId)
+        }
+        else
+            _flashcards = dataSource.getFlashcards(topicId)
         //Log.i("RAND", _flashcards.value.toString())
     }
 
@@ -51,5 +62,21 @@ class LearningViewModel(val dataSource: FiszkiDatabaseDao, var application: Appl
         flashcardsSize = randomFlashcards?.size!!
 
         Log.i("RAND", flashcardsSize.toString())
+    }
+
+    fun addToRepeat(flashcard: Flashcard, langToLangId: Int) {
+        val f =  ToRepeat(flashcard.flashcardId, langToLangId)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            dataSource.insertFlashcardToRepeat(f)
+        }
+    }
+
+    fun deleteToRepeatFlashcard(flashcardId: Int?) {
+        if (flashcardId != null) {
+            CoroutineScope(IO).launch {
+            dataSource.deleteToRepeatFlashcard(flashcardId)
+            }
+        }
     }
 }

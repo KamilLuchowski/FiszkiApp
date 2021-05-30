@@ -5,9 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "torepeat_table")
 data class ToRepeat(
-    val flashcardId: Int,
+    @PrimaryKey
+    var flashcardId: Int,
     val langToLangId: Int
-){
-    @PrimaryKey (autoGenerate = true)
-    var toRepeatId: Int = 0
-}
+)

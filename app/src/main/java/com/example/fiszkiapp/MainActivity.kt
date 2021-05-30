@@ -1,12 +1,12 @@
 package com.example.fiszkiapp
 
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.os.Bundle
-import android.util.Log
-import android.view.MenuItem
+import android.os.Environment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.fiszkiapp.database.FiszkiDatabase
 import com.example.fiszkiapp.database.LangToLang
@@ -15,45 +15,29 @@ import com.example.fiszkiapp.databinding.MainActivityBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.i("WTF", 1.toString())
-
-//        supportFragmentManager.addOnBackStackChangedListener {
-//            val stackHeight = supportFragmentManager.backStackEntryCount
-//            Log.i("WTF", stackHeight.toString())
-//            if (stackHeight > 0) { // if we have something on the stack (doesn't include the current shown fragment)
-//                supportActionBar?.setDisplayHomeAsUpEnabled(true);
-//                supportActionBar?.setHomeButtonEnabled(true)
-//            } else {
-//                supportActionBar?.setDisplayHomeAsUpEnabled(false)
-//                supportActionBar?.setHomeButtonEnabled(false)
-//            }
-//        }
 
         super.onCreate(savedInstanceState)
+        val folder = File(
+            Environment.getExternalStorageDirectory().toString() +
+                    File.separator.toString() + "FiszkiApp"  +
+                    File.separator.toString() + "database")
+
+        if (!folder.exists()) {
+            folder.mkdirs()
+        }
         @Suppress("UNUSED_VARIABLE")
         val binding = DataBindingUtil.setContentView<MainActivityBinding>(this, R.layout.main_activity)
-        //val navController = this.findNavController(R.id.myNavHostFragment)
-        //NavigationUI.setupActionBarWithNavController(this, navController)
 
-        //val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-       // setSupportActionBar(toolbar)
-
-        // add back arrow to toolbar
-
-        // add back arrow to toolbar
-//        if (supportActionBar != null) {
-//            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-//            supportActionBar!!.setDisplayShowHomeEnabled(true)
-//        }
-        //supportFragmentManager.addOnBackStackChangedListener(this)
-
-        getActionBar()?.setDisplayHomeAsUpEnabled(true);
+        actionBar?.setDisplayHomeAsUpEnabled(true);
 
         val navController = this.findNavController(R.id.myNavHostFragment)
         NavigationUI.setupActionBarWithNavController(this, navController)
+        val requestCode = 0
+        ActivityCompat.requestPermissions(this@MainActivity, arrayOf(WRITE_EXTERNAL_STORAGE), requestCode)
 
         val dataSource = FiszkiDatabase.getInstance(application).fiszkiDatabaseDao
 
