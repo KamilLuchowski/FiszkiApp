@@ -2,7 +2,9 @@ package com.example.fiszkiapp.FlashcardDetails
 
 import android.app.AlertDialog
 import android.content.ClipData
+import android.content.Context
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -24,12 +26,16 @@ import com.example.fiszkiapp.database.FlashcardAndTopic
 import com.example.fiszkiapp.database.Topic
 import com.example.fiszkiapp.databinding.FragmentFlashcardDetailsBinding
 import com.example.fiszkiapp.databinding.FragmentFlashcardsBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class FlashcardDetailsFragment: Fragment() {
 
     private lateinit var viewModel : FlashcardDetailsViewModel
     private lateinit var viewModelFactory: FlashcardDetailsViewModelFactory
+    private lateinit var TTS: TextToSpeech
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,22 +55,23 @@ class FlashcardDetailsFragment: Fragment() {
 
         val binding : FragmentFlashcardDetailsBinding = DataBindingUtil
             .inflate(inflater, R.layout.fragment_flashcard_details, container, false)
-
         var flashcardAndTopic: FlashcardAndTopic? = null
 
         viewModel.flashcardAndTopic.observe(viewLifecycleOwner, Observer {
             flashcardAndTopic = it
-            binding.wordDetails.text = it.flashcard.word.toString()
-            binding.translationDetails.text = it.flashcard.translation.toString()
-
+            binding.wordDetails.text = it.flashcard.word
+            binding.translationDetails.text = it.flashcard.translation
+            binding.detailsDescription.text = it.flashcard.description
+            textToSpeech(it.flashcard.word, langtoLangId, binding.detailsSpeakerButton)
         })
 
         binding.editFlashcardFab.setOnClickListener {
             Navigation.findNavController(it)
                 .navigate(FlashcardDetailsFragmentDirections
                 .actionFlashcardDetailsFragmentToAddEditFlashcardFragment(
-                flashcardAndTopic?.flashcard?.flashcardId!!,
-                flashcardAndTopic?.topic?.topicId!!
+                    flashcardAndTopic?.flashcard?.flashcardId!!,
+                    flashcardAndTopic?.topic?.topicId!!,
+                    langtoLangId
             ))
         }
 
@@ -81,7 +88,7 @@ class FlashcardDetailsFragment: Fragment() {
                 list.add(it.topicName)
             }
 
-            var t = it.filter { topic -> topic.topicId == flashcardAndTopic?.topic?.topicId!! }.first()
+            val t = it.filter { topic -> topic.topicId == flashcardAndTopic?.topic?.topicId!! }.first()
 
 
             val aa = ArrayAdapter(application.applicationContext,
@@ -101,5 +108,24 @@ class FlashcardDetailsFragment: Fragment() {
 
 
         return binding.root
+    }
+
+
+    fun textToSpeech(word:String, langToLangId: Int, speakerButton: FloatingActionButton){
+        TTS = TextToSpeech(context,
+            TextToSpeech.OnInitListener { status ->
+                if (status != TextToSpeech.ERROR) {
+                    val dict = LangToLangDictionary()
+                    TTS.language = Locale(dict.learningLanguage(langToLangId))
+                    //                    t1.setLanguage(Locale.GERMANY);
+                    //                    t1.setLanguage(new Locale("ru"));
+                    Log.d("TTS", "ok")
+                } else {
+                    Log.d("TTS", "error")
+                }
+            })
+        speakerButton.setOnClickListener{
+            TTS.speak(word, TextToSpeech.QUEUE_FLUSH, null, "")
+        }
     }
 }

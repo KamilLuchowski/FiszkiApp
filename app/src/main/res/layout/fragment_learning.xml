@@ -19,12 +19,13 @@
             android:id="@+id/learning_word"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="32dp"
             android:text="word"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
         <TextView
             android:id="@+id/learning_translation"
@@ -45,19 +46,19 @@
             app:layout_constraintTop_toBottomOf="@+id/showAnswerButton" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/learningSpeakerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="12dp"
-            android:backgroundTint="@color/primary"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#FFFFFF"
             android:text="Listen"
-            android:textColor="@color/white"
-            android:visibility="invisible"
+            android:textColor="@color/accent"
             app:icon="@drawable/outline_play_circle_black_48"
-            app:iconTint="@color/white"
+            app:iconTint="@color/accent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/learning_translation" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/learning_word" />
 
         <Button
             android:id="@+id/i_knew_it_button"
@@ -66,7 +67,7 @@
             android:layout_height="70dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:text="I knew it"
+            android:text="@string/i_knew_it"
             app:backgroundTint="#8BC34A"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +81,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="16dp"
-            android:text="I didn't know"
+            android:text="@string/i_didn_t_know"
             app:backgroundTint="#E91E63"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/i_knew_it_button"
@@ -94,10 +95,23 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
-            android:text="SHOW ANSWER"
+            android:text="@string/show_answer"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/learning_word" />
+            app:layout_constraintTop_toBottomOf="@+id/learningSpeakerButton" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/what_does_it_mean"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

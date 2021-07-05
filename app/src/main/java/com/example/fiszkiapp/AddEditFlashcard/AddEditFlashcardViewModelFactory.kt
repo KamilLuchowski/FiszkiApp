@@ -10,13 +10,14 @@ class AddEditFlashcardViewModelFactory(
     private val dataSource: FiszkiDatabaseDao,
     private val application: Application,
     private val flashcardId: Int,
-    private val topicId: Int
+    private val topicId: Int,
+    private val langToLangId: Int
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         @Suppress("unchecked_cast")
         if (modelClass.isAssignableFrom(AddEditFlashcardViewModel::class.java)) {
-            return AddEditFlashcardViewModel(dataSource, application, flashcardId, topicId) as T
+            return AddEditFlashcardViewModel(dataSource, application, flashcardId, topicId, langToLangId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

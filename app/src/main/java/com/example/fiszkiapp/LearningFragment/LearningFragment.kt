@@ -1,15 +1,22 @@
 package com.example.fiszkiapp.LearningFragment
 
+import android.opengl.Visibility
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.view.*
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.example.fiszkiapp.LangToLangDictionary
 import com.example.fiszkiapp.R
 import com.example.fiszkiapp.database.FiszkiDatabase
 import com.example.fiszkiapp.databinding.FragmentLearningBinding
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import java.util.*
 
 
 class LearningFragment : Fragment() {
@@ -38,32 +45,24 @@ class LearningFragment : Fragment() {
         viewModel.flashcards.observe(viewLifecycleOwner, Observer {
             viewModel.randomList()
             bind(inflater, container, binding)
+            textToSpeech(viewModel.randomFlashcards?.get(viewModel.iterator)!!.word, langToLangId, binding.learningSpeakerButton)
         })
 
         binding.showAnswerButton.setOnClickListener {
-            translationVisible(binding)
+            if (binding.learningTranslation.visibility == INVISIBLE)
+                translationVisible(binding)
+            else
+                translationInvisible(binding)
         }
-
-
 
         binding.iDidntKnowButton.setOnClickListener {
             translationInvisible(binding)
-
-            if (viewModel.iterator < viewModel.flashcardsSize && viewModel.iterations == 2) {
-                viewModel._randomFlashcards?.get(viewModel.iterator)?.let { it1 ->
-                    viewModel.addToRepeat(
-                        it1, langToLangId
-                    )
-                }
-            }
-
-            viewModel.iterator++
+            viewModel.ididntknowClicks++
+            viewModel.didntKnowHandler(langToLangId, inflater, container, binding)
             if (viewModel.iterator < viewModel.flashcardsSize) {
                 bind(inflater, container, binding)
-
             } else {
                 viewModel.iterations++
-
                 viewModel.iterator = 0
                 bind(inflater, container, binding)
             }
@@ -71,15 +70,12 @@ class LearningFragment : Fragment() {
 
         binding.iKnewItButton.setOnClickListener {
             translationInvisible(binding)
-            if (topicId == -1)
-                viewModel.deleteToRepeatFlashcard(viewModel._randomFlashcards?.get(viewModel.iterator)?.flashcardId)
-            viewModel._randomFlashcards?.removeAt(viewModel.iterator)
-
-            viewModel.flashcardsSize = viewModel.randomFlashcards?.size!!
+            viewModel.iknewitClicks++
+            viewModel.iKnewHandler(topicId)
 
             if (viewModel.flashcardsSize == 0) {
                 Navigation.findNavController(it)
-                    .navigate(LearningFragmentDirections.actionLearningFragmentToLearningFinishedFragment())
+                    .navigate(LearningFragmentDirections.actionLearningFragmentToLearningFinishedFragment(viewModel.iknewitClicks, viewModel.ididntknowClicks))
                 return@setOnClickListener
             }
             if (viewModel.iterator == viewModel.flashcardsSize)
@@ -91,13 +87,14 @@ class LearningFragment : Fragment() {
         return binding.root
     }
 
+
     private fun translationVisible(binding: FragmentLearningBinding) {
-        binding.learningTranslation.visibility = View.VISIBLE
-        binding.floatingActionButton.visibility = View.VISIBLE
+        binding.learningTranslation.visibility = VISIBLE
+        binding.showAnswerButton.text = getString(R.string.hide_answer)
     }
     private fun translationInvisible(binding: FragmentLearningBinding) {
-        binding.learningTranslation.visibility = View.INVISIBLE
-        binding.floatingActionButton.visibility = View.INVISIBLE
+        binding.learningTranslation.visibility = INVISIBLE
+        binding.showAnswerButton.text = getString(R.string.show_answer)
     }
 
     private fun bind(
@@ -109,4 +106,15 @@ class LearningFragment : Fragment() {
         binding.learningTranslation.text =
             viewModel.randomFlashcards?.get(viewModel.iterator)?.translation
     }
+
+    private fun textToSpeech(word:String, langToLangId: Int, speakerButton: ExtendedFloatingActionButton){
+        val TTS:TextToSpeech = viewModel.textToSpeechInit()
+        val dict = LangToLangDictionary()
+        TTS.language = Locale(dict.learningLanguage(langToLangId))
+        speakerButton.setOnClickListener{
+            TTS.speak(word, TextToSpeech.QUEUE_FLUSH, null, "")
+        }
+    }
+
+
 }

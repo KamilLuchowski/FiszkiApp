@@ -18,9 +18,17 @@ class FlashcardsViewModel(val dataSource: FiszkiDatabaseDao, application: Applic
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
-    var _flashcards: LiveData<List<Flashcard>>
+    private var _flashcards: LiveData<List<Flashcard>> = dataSource.getFlashcards(topicId)
     val flashcards
         get() = _flashcards
+
+    private var _topic: LiveData<Topic> = dataSource.getTopic(topicId)
+    val topic
+        get() = _topic
+
+    private var _topicCounter: LiveData<Int> = dataSource.flashcardsInTopicCount(topicId)
+    val topicCounter
+        get() = _topicCounter
 
     override fun onCleared() {
         super.onCleared()
@@ -28,7 +36,6 @@ class FlashcardsViewModel(val dataSource: FiszkiDatabaseDao, application: Applic
     }
 
     init {
-        _flashcards = dataSource.getFlashcards(topicId)
         uiScope.launch {
         }
     }

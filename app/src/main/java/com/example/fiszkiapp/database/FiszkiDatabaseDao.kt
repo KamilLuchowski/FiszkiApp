@@ -9,6 +9,9 @@ interface FiszkiDatabaseDao {
     @Query("SELECT count(*) FROM langToLang_table")
     fun langToLangCount(): Int
 
+    @Query("SELECT count(*) FROM flashcard_table where flashcardTopic=:key")
+    fun flashcardsInTopicCount(key: Int): LiveData<Int>
+
     @Insert
     fun insertLanguage(lang: Language)
 
@@ -85,10 +88,12 @@ interface FiszkiDatabaseDao {
     @Query("DELETE FROM torepeat_table WHERE flashcardId=:key")
     fun deleteToRepeatFlashcard(key: Int)
 
-
     @Transaction
     @Query("SELECT * FROM flashcard_table WHERE flashcardId IN (SELECT flashcardId from torepeat_table WHERE langToLangId =:langToLangId)")
-    fun gegege(langToLangId: Int): LiveData<List<Flashcard>>
+    fun getToRepeatFlashcards(langToLangId: Int): LiveData<List<Flashcard>>
+
+    @Query("SELECT * FROM topic_table WHERE topicId=:key")
+    fun getTopic(key: Int): LiveData<Topic>
 }
 
 

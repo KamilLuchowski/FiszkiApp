@@ -15,6 +15,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fiszkiapp.LangToLangDictionary
 import com.example.fiszkiapp.R
 import com.example.fiszkiapp.database.FiszkiDatabase
 import com.example.fiszkiapp.databinding.FragmentToRepeatBinding
@@ -41,6 +42,7 @@ class ToRepeatFragment: Fragment() {
 
         val binding : FragmentToRepeatBinding = DataBindingUtil
             .inflate(inflater, R.layout.fragment_to_repeat, container, false)
+        binding.ToRepeatFlag.setImageResource(LangToLangDictionary().drawableFlagSourceLanguage(langToLangId, application.applicationContext))
 
         val adapter = ToRepeatAdapter(application.applicationContext, langToLangId)
         binding.listToRepeatFlashcards.adapter = adapter

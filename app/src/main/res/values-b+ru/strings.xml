@@ -23,4 +23,23 @@
     <string name="to_repeat">Repeat it</string>
     <string name="learning">Learning</string>
     <string name="learning_finished">Finished</string>
+    <string name="hide_answer">HIDE ANSWER</string>
+    <string name="show_answer">SHOW ANSWER</string>
+    <string name="your_result">Your result</string>
+    <string name="i_knew_it_clicks">I knew it clicks</string>
+    <string name="quot_i_didn_t_know_it_quot_clicks">\"I didn\'t know it\" clicks</string>
+    <string name="usage_example_notes">Usage example, notes</string>
+    <string name="word">Word</string>
+    <string name="translation">Translation</string>
+    <string name="name">Name</string>
+    <string name="topic">Topic</string>
+    <string name="description">Description</string>
+    <string name="icon_made_by_smashicons_from_flaticon">Icon made by Smashicons from Flaticon</string>
+    <string name="study">Study</string>
+    <string name="i_didn_t_know">I didn\'t know</string>
+    <string name="i_knew_it">I knew it</string>
+    <string name="what_does_it_mean">What does it mean?</string>
+    <string name="source_language">Source language</string>
+    <string name="let_s_study">Let\'s study:</string>
+    <string name="there_s_phases_that_are_hard_to_remember_take_a_look_and_play_a_repeat_game">There\'s phases that are hard to remember. Take a look and play a repeat game!</string>
 </resources>

@@ -3,22 +3,83 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/iknewitClicks"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="32dp"
+            android:text=""
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@+id/ididntknowClicks"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/donut_view" />
+
+        <TextView
+            android:id="@+id/ididntknowClicks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iknewitClicks"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iknewitClicks" />
+
+
+        <app.futured.donut.DonutProgressView
+            android:id="@+id/donut_view"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="48dp"
+            app:donut_bgLineColor="@color/accent"
+            app:donut_gapAngle="270"
+            app:donut_gapWidth="20"
+            app:donut_strokeWidth="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/iknewitClicks"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="135dp"
-            android:text="KONIEC"
+            android:layout_marginTop="32dp"
+            android:text="@string/your_result"
+            android:textSize="36sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/i_knew_it_clicks"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/iknewitClicks"
+            app:layout_constraintStart_toStartOf="@+id/iknewitClicks"
+            app:layout_constraintTop_toBottomOf="@+id/iknewitClicks" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/quot_i_didn_t_know_it_quot_clicks"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/ididntknowClicks"
+            app:layout_constraintStart_toStartOf="@+id/ididntknowClicks"
+            app:layout_constraintTop_toBottomOf="@+id/iknewitClicks" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

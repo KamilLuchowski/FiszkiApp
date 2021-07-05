@@ -1,12 +1,16 @@
 package com.example.fiszkiapp.LearningFragment
 
 import android.app.Application
+import android.speech.tts.TextToSpeech
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.fiszkiapp.database.FiszkiDatabaseDao
 import com.example.fiszkiapp.database.Flashcard
 import com.example.fiszkiapp.database.ToRepeat
+import com.example.fiszkiapp.databinding.FragmentLearningBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
@@ -19,7 +23,7 @@ class LearningViewModel(
     val topicId: Int,
     langToLangId: Int
 ): ViewModel() {
-
+    lateinit var TTS: TextToSpeech
     private var viewModelJob = Job()
 
     private var _flashcards: LiveData<List<Flashcard>>
@@ -34,6 +38,9 @@ class LearningViewModel(
     var flashcardsSize: Int = 0
     var iterations = 0
 
+    var iknewitClicks: Int = 0
+    var ididntknowClicks: Int = 0
+
 
     override fun onCleared() {
         super.onCleared()
@@ -42,7 +49,7 @@ class LearningViewModel(
 
     init {
         if (topicId == -1) {
-            _flashcards = dataSource.gegege(langToLangId)
+            _flashcards = dataSource.getToRepeatFlashcards(langToLangId)
         }
         else
             _flashcards = dataSource.getFlashcards(topicId)
@@ -78,5 +85,45 @@ class LearningViewModel(
             dataSource.deleteToRepeatFlashcard(flashcardId)
             }
         }
+    }
+
+    fun didntKnowHandler(
+        langToLangId: Int,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        binding: FragmentLearningBinding
+    ) {
+        if (iterator < flashcardsSize && iterations == 2) {
+            _randomFlashcards?.get(iterator)?.let { it1 ->
+                addToRepeat(
+                    it1, langToLangId
+                )
+            }
+        }
+
+        iterator++
+
+    }
+
+    fun iKnewHandler(topicId: Int) {
+        if (topicId == -1)
+            deleteToRepeatFlashcard(_randomFlashcards?.get(iterator)?.flashcardId)
+        _randomFlashcards?.removeAt(iterator)
+
+        flashcardsSize = randomFlashcards?.size!!
+    }
+
+    fun textToSpeechInit(): TextToSpeech {
+        return TextToSpeech(application.applicationContext,
+            TextToSpeech.OnInitListener { status ->
+                if (status != TextToSpeech.ERROR) {
+
+                    //                    t1.setLanguage(Locale.GERMANY);
+                    //                    t1.setLanguage(new Locale("ru"));
+                    Log.d("TTS", "ok")
+                } else {
+                    Log.d("TTS", "error")
+                }
+            })
     }
 }

@@ -48,6 +48,8 @@ dependencies {
     //kapt "android.arch.persistence.room:compiler:1.0.0"
     kapt "androidx.room:room-compiler:2.2.6"
 
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     // Navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.0.0-rc02'
@@ -61,5 +63,12 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    //implementation 'com.txusballesteros:FitChart:1.0'
+    implementation("app.futured.donut:library:2.1.0")
+
+    // If you want to use Jetpack Compose version then use only this one dependency
+    implementation("app.futured.donut:library-compose:2.1.0")
+
 
 }

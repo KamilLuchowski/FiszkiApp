@@ -6,7 +6,8 @@ import androidx.room.*
 data class Flashcard(
     var word: String,
     var translation: String,
-    var flashcardTopic: Int
+    var flashcardTopic: Int,
+    var description:String
 ){
     @PrimaryKey (autoGenerate = true)
     var flashcardId: Int = 0

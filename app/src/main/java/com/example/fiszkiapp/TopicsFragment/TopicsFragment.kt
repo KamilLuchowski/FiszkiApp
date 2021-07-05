@@ -33,7 +33,6 @@ class TopicsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        activity?.title = "dupaaaaaaaaaa"
         val application = requireNotNull(this.activity).application
         val dataSource = FiszkiDatabase.getInstance(application).fiszkiDatabaseDao
 
@@ -48,24 +47,6 @@ class TopicsFragment : Fragment() {
 
         aaa.adapter = adapter
         aaa.layoutManager = LinearLayoutManager(context)
-
-//        class  simpleItemTouchCallback: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-//
-//            override fun onMove(
-//                recyclerView: RecyclerView,
-//                viewHolder: RecyclerView.ViewHolder,
-//                target: RecyclerView.ViewHolder
-//            ): Boolean {
-//                return true
-//            }
-//
-//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//                //
-//            }
-//        }
-//
-//        val itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback())
-//        itemTouchHelper.attachToRecyclerView(aaa)
 
         viewModel.langToLangAndTopic.observe(viewLifecycleOwner, Observer {
             adapter.data = it
@@ -88,9 +69,6 @@ class TopicsFragment : Fragment() {
                     .findNavController(it)
                     .navigate(TopicsFragmentDirections.actionTopicsFragmentToToRepeatFragment(langTolangId))
         }
-
-
-
         return view
     }
 

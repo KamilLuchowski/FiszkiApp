@@ -60,6 +60,9 @@
         <argument
             android:name="topicId"
             app:argType="integer" />
+        <argument
+            android:name="langToLang"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/flashcardDetailsFragment"
@@ -93,7 +96,14 @@
     <fragment
         android:id="@+id/learningFinishedFragment"
         android:name="com.example.fiszkiapp.LearningFinished.LearningFinishedFragment"
-        android:label="@string/learning_finished" />
+        android:label="@string/learning_finished" >
+        <argument
+            android:name="iknewitClicks"
+            app:argType="integer" />
+        <argument
+            android:name="ididntknowClicks"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/toRepeatFragment"
         android:name="com.example.fiszkiapp.toRepeatFragment.ToRepeatFragment"

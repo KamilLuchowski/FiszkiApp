@@ -8,6 +8,7 @@ import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.annotation.NonNull
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -28,7 +29,7 @@ class TitleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        activity?.title = "Your actionbar title"
+        //activity?.title = "Your actionbar title"
         val application = requireNotNull(this.activity).application
         val dataSource = FiszkiDatabase.getInstance(application).fiszkiDatabaseDao
 
@@ -63,7 +64,8 @@ class TitleFragment : Fragment() {
         }
 
         viewModel._languageAndLangToLang.observe(viewLifecycleOwner, Observer {
-            srcLangChange(dropdown, adapter)
+
+                srcLangChange(dropdown, adapter)
         })
 
         return binding.root
@@ -73,13 +75,15 @@ class TitleFragment : Fragment() {
         dropdown: Spinner,
         adapter: LangToLangAdapter
     ) {
-        when {
-            dropdown.selectedItemPosition == 0 -> adapter.data =
-                viewModel._languageAndLangToLang.value!!.subList(0, 2)
-            dropdown.selectedItemPosition == 1 -> adapter.data =
-                viewModel._languageAndLangToLang.value!!.subList(2, 4)
-            dropdown.selectedItemPosition == 2 -> adapter.data =
-                viewModel._languageAndLangToLang.value!!.subList(4, 6)
+        if (viewModel._languageAndLangToLang.value != null) {
+            when {
+                dropdown.selectedItemPosition == 0 -> adapter.data =
+                    viewModel._languageAndLangToLang.value?.subList(0, 2)!!
+                dropdown.selectedItemPosition == 1 -> adapter.data =
+                    viewModel._languageAndLangToLang.value?.subList(2, 4)!!
+                dropdown.selectedItemPosition == 2 -> adapter.data =
+                    viewModel._languageAndLangToLang.value?.subList(4, 6)!!
+            }
         }
 
         adapter.notifyDataSetChanged()

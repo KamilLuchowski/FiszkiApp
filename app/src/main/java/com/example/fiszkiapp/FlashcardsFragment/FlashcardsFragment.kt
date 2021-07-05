@@ -57,12 +57,21 @@ class FlashcardsFragment: Fragment() {
         binding.addFlashcardButton.setOnClickListener {
             Navigation.findNavController(it)
                 .navigate(FlashcardsFragmentDirections
-                    .actionFlashcardsFragmentToAddEditFlashcardFragment(-1, topicId))
+                    .actionFlashcardsFragmentToAddEditFlashcardFragment(-1, topicId, langToLangId))
         }
 
         viewModel.flashcards.observe(viewLifecycleOwner, Observer {
             adapter.data = it
             adapter.notifyDataSetChanged()
+        })
+
+        viewModel.topic.observe(viewLifecycleOwner, Observer {
+            binding.topicName.text = it.topicName
+            binding.topicCounter.text
+        })
+
+        viewModel.topicCounter.observe(viewLifecycleOwner, Observer {
+            binding.topicCounter.text = it.toString()
         })
 
         binding.playButton.setOnClickListener {
@@ -109,16 +118,16 @@ class FlashcardsFragment: Fragment() {
                 NavigationUI.navigateUp(navController, DrawerLayout(context!!))
             } // A null listener allows the button to dismiss the dialog and take no further action.
             .setNegativeButton("No", null)
-            .setIcon(android.R.drawable.ic_dialog_alert)
+            //.setIcon(android.R.drawable.ic_dialog_alert)
             .show()
     }
 
     private fun renameTopic() {
         val view = layoutInflater.inflate(R.layout.topic_rename_dialog, null);
         val alertDialog = AlertDialog.Builder(context).create();
-        alertDialog.setTitle("Your Title Here");
+        alertDialog.setTitle("Enter topic's new name:");
         alertDialog.setCancelable(false);
-        alertDialog.setMessage("Your Message Here");
+        //alertDialog.setMessage("Your Message Here");
 
         val etComments = view.findViewById<EditText>(R.id.etComments);
 

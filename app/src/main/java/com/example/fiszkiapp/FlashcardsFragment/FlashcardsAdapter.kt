@@ -48,6 +48,20 @@ class FlashcardsAdapter(val context: Context, var langToLangId: Int): RecyclerVi
 
     class ViewHolder private constructor(itemView: View): RecyclerView.ViewHolder(itemView){
         lateinit var TTS: TextToSpeech
+        init {
+            TTS = TextToSpeech(itemView.context,
+                TextToSpeech.OnInitListener { status ->
+                    if (status != TextToSpeech.ERROR) {
+
+
+                        //                    t1.setLanguage(Locale.GERMANY);
+                        //                    t1.setLanguage(new Locale("ru"));
+                        Log.d("TTS", "ok")
+                    } else {
+                        Log.d("TTS", "error")
+                    }
+                })
+        }
         fun bind(item: Flashcard, langToLangId: Int) {
             text_word.text = item.word
             text_translation.text = item.translation
@@ -66,21 +80,11 @@ class FlashcardsAdapter(val context: Context, var langToLangId: Int): RecyclerVi
             }
         }
 
-        fun textToSpeech(word:String, langToLangId: Int){
+        private fun textToSpeech(word:String, langToLangId: Int){
 
-            TTS = TextToSpeech(itemView.context,
-                TextToSpeech.OnInitListener { status ->
-                    if (status != TextToSpeech.ERROR) {
-                        val dict = LangToLangDictionary()
-                        TTS.language = Locale(dict.learningLanguage(langToLangId))
-                        //                    t1.setLanguage(Locale.GERMANY);
-                        //                    t1.setLanguage(new Locale("ru"));
-                        Log.d("TTS", "ok")
-                    } else {
-                        Log.d("TTS", "error")
-                    }
-                })
             speakerButton.setOnClickListener{
+                val dict = LangToLangDictionary()
+                TTS.language = Locale(dict.learningLanguage(langToLangId))
                 TTS.speak(word, TextToSpeech.QUEUE_FLUSH, null, "")
             }
         }

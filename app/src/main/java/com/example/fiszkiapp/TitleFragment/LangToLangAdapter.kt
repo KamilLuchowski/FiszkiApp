@@ -1,10 +1,13 @@
 package com.example.fiszkiapp.TitleFragment
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.provider.Settings.Global.getString
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -38,9 +41,11 @@ class LangToLangAdapter(val context: Context): RecyclerView.Adapter<LangToLangAd
         fun bind(item: LanguageAndLangToLang, context: Context) {
 
             text1.text  = context.getString(LangToLangDictionary.langName[item.language2.languageId].second)
+            l2lFlag.setImageResource(LangToLangDictionary().drawableFlagLearningLanguage(item.l2l.langToLangId, context))
         }
 
         val text1: TextView = itemView.findViewById(R.id.lang1)
+        val l2lFlag: ImageView = itemView.findViewById(R.id.l2lFlag)
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
