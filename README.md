@@ -1,6 +1,9 @@
 # FiszkiApp
 
---APP UNDER CONSTRUCION--
-Flashcards Android app
--Kotlin
--Room
+Flashcards Android app  
+Kotlin  
+MVVM  
+Jetpack (Room, LiveData, Navigation, Fragments, ConstraintLayout)  
+OkHTTP (Microsoft Translator Text API), TextToSpeech  
+Material Design  
+
