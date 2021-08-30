@@ -90,7 +90,6 @@ class FlashcardDetailsFragment: Fragment() {
 
             val t = it.filter { topic -> topic.topicId == flashcardAndTopic?.topic?.topicId!! }.first()
 
-
             val aa = ArrayAdapter(application.applicationContext,
                     android.R.layout.simple_spinner_dropdown_item, list)
                 dropdown.adapter = aa
@@ -117,8 +116,6 @@ class FlashcardDetailsFragment: Fragment() {
                 if (status != TextToSpeech.ERROR) {
                     val dict = LangToLangDictionary()
                     TTS.language = Locale(dict.learningLanguage(langToLangId))
-                    //                    t1.setLanguage(Locale.GERMANY);
-                    //                    t1.setLanguage(new Locale("ru"));
                     Log.d("TTS", "ok")
                 } else {
                     Log.d("TTS", "error")

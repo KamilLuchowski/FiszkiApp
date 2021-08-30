@@ -28,7 +28,7 @@ abstract class FiszkiDatabase : RoomDatabase(){
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         FiszkiDatabase::class.java,
-                        DB_PATH//"fiszki_database"
+                        DB_PATH
                     ).fallbackToDestructiveMigration()
                             .build()
                     INSTANCE = instance

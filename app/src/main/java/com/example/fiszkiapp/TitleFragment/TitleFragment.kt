@@ -29,7 +29,6 @@ class TitleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //activity?.title = "Your actionbar title"
         val application = requireNotNull(this.activity).application
         val dataSource = FiszkiDatabase.getInstance(application).fiszkiDatabaseDao
 
@@ -40,7 +39,6 @@ class TitleFragment : Fragment() {
 
         val adapter = LangToLangAdapter(application.applicationContext)
         binding.list.adapter = adapter
-        //binding.list.layoutManager = LinearLayoutManager(context)
         setHasOptionsMenu(true)
 
         val dropdown: Spinner = binding.spinner1

@@ -22,14 +22,14 @@ import okhttp3.*
 import java.io.IOException
 
 
-class AddEditFlashcardFragment: Fragment() {
+class AddEditFlashcardFragment : Fragment() {
 
-    private lateinit var viewModel : AddEditFlashcardViewModel
+    private lateinit var viewModel: AddEditFlashcardViewModel
     private lateinit var viewModelFactory: AddEditFlashcardViewModelFactory
 
     var flashcardId: Int = 0
     var topicId: Int = 0
-    var flashcard: FlashcardAndTopic? = null//Flashcard("","", 0)
+    var flashcard: FlashcardAndTopic? = null
     var langToLangId: Int = 0
 
     override fun onCreateView(
@@ -46,21 +46,43 @@ class AddEditFlashcardFragment: Fragment() {
         langToLangId = AddEditFlashcardFragmentArgs.fromBundle(arguments!!).langToLang
 
 
-        viewModelFactory = AddEditFlashcardViewModelFactory(dataSource, application, flashcardId, topicId, langToLangId)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(AddEditFlashcardViewModel::class.java)
+        viewModelFactory = AddEditFlashcardViewModelFactory(
+            dataSource,
+            application,
+            flashcardId,
+            topicId,
+            langToLangId
+        )
+        viewModel =
+            ViewModelProvider(this, viewModelFactory).get(AddEditFlashcardViewModel::class.java)
 
-        val binding : FragmentAddEditFlashcardBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_edit_flashcard, container, false)
+        val binding: FragmentAddEditFlashcardBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_add_edit_flashcard,
+            container,
+            false
+        )
 
         val dict = LangToLangDictionary()
-        binding.wordTextEdit.hint = dict.learningLanguageLong(langToLangId, application.applicationContext)
-        binding.translationTextEdit.hint = dict.sourceLanguageLong(langToLangId, application.applicationContext)
+        binding.wordTextEdit.hint =
+            dict.learningLanguageLong(langToLangId, application.applicationContext)
+        binding.translationTextEdit.hint =
+            dict.sourceLanguageLong(langToLangId, application.applicationContext)
 
-        binding.EditFlag1.setImageResource(LangToLangDictionary().drawableFlagLearningLanguage(langToLangId, application.applicationContext))
-        binding.EditFlag2.setImageResource(LangToLangDictionary().drawableFlagSourceLanguage(langToLangId, application.applicationContext))
-
-        //binding.textView.text = viewModel.flashcard.value?.word
+        binding.EditFlag1.setImageResource(
+            LangToLangDictionary().drawableFlagLearningLanguage(
+                langToLangId,
+                application.applicationContext
+            )
+        )
+        binding.EditFlag2.setImageResource(
+            LangToLangDictionary().drawableFlagSourceLanguage(
+                langToLangId,
+                application.applicationContext
+            )
+        )
         viewModel.translation.observe(viewLifecycleOwner, Observer {
-            if(it != "")
+            if (it != "")
                 binding.translationTextEdit.setText(it)
         })
 
@@ -73,7 +95,10 @@ class AddEditFlashcardFragment: Fragment() {
         })
         binding.button2.setOnClickListener {
             val dict = LangToLangDictionary()
-            viewModel.translate(dict.sourceLanguage(langToLangId), binding.wordTextEdit.text.toString())
+            viewModel.translate(
+                dict.sourceLanguage(langToLangId),
+                binding.wordTextEdit.text.toString()
+            )
         }
 
 
@@ -81,20 +106,20 @@ class AddEditFlashcardFragment: Fragment() {
             val wordText = binding.wordTextEdit.text.toString()
             val translateText = binding.translationTextEdit.text.toString()
             val descriptionText = binding.EditDescription.text.toString()
-            if(wordText.length == 0 || translateText.length == 0)
+            if (wordText.isEmpty() || translateText.isEmpty())
                 Toast.makeText(context, getString(R.string.empty_field), Toast.LENGTH_SHORT).show()
-            else{
+            else {
                 if (flashcardId == -1)
                     viewModel.addFlashcard(wordText, translateText, descriptionText)
                 else {
                     viewModel.updateFlashcard(flashcardId, wordText, translateText)
                 }
                 activity?.currentFocus?.let { view ->
-                    val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    val imm =
+                        context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(view.windowToken, 0)
                 }
                 Navigation.findNavController(it).navigateUp()
-
             }
         }
 

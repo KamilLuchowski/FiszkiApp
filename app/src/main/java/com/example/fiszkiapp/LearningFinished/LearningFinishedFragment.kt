@@ -60,13 +60,11 @@ class LearningFinishedFragment : Fragment() {
             color = Color.parseColor("#E91E63"),
             amount = ididntknowClicks.toFloat()
         )
-
         val section2 = DonutSection(
             name = "section_2",
             color = Color.parseColor("#8BC34A"),
             amount = iknewitClicks.toFloat()
         )
-
         binding.donutView.cap = sum.toFloat()
         binding.donutView.submitData(listOf(section1, section2))
     }

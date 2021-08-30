@@ -110,26 +110,23 @@ class FlashcardsFragment: Fragment() {
     private fun deleteTopic() {
         AlertDialog.Builder(context)
             .setTitle("Delete the topic")
-            .setMessage("Are you sure you want to delete this topic with all flashcards?") // Specifying a listener allows you to take an action before dismissing the dialog.
-            // The dialog is automatically dismissed when a dialog button is clicked.
+            .setMessage("Are you sure you want to delete this topic with all flashcards?")
             .setPositiveButton("Yes") { dialog, which ->
                 viewModel.deleteTopic(topicId)
                 val navController = this.findNavController()
                 NavigationUI.navigateUp(navController, DrawerLayout(context!!))
-            } // A null listener allows the button to dismiss the dialog and take no further action.
+            }
             .setNegativeButton("No", null)
-            //.setIcon(android.R.drawable.ic_dialog_alert)
             .show()
     }
 
     private fun renameTopic() {
-        val view = layoutInflater.inflate(R.layout.topic_rename_dialog, null);
-        val alertDialog = AlertDialog.Builder(context).create();
-        alertDialog.setTitle("Enter topic's new name:");
-        alertDialog.setCancelable(false);
-        //alertDialog.setMessage("Your Message Here");
+        val view = layoutInflater.inflate(R.layout.topic_rename_dialog, null)
+        val alertDialog = AlertDialog.Builder(context).create()
+        alertDialog.setTitle("Enter topic's new name:")
+        alertDialog.setCancelable(false)
 
-        val etComments = view.findViewById<EditText>(R.id.etComments);
+        val etComments = view.findViewById<EditText>(R.id.etComments)
 
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK") { dialog, which ->
             val str = etComments.text.toString()

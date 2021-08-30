@@ -52,9 +52,6 @@ class MainActivity : AppCompatActivity() {
                 dataSource.insertLangToLang(LangToLang(4, 2, 0))
                 dataSource.insertLangToLang(LangToLang(5, 2, 1))
 
-
-                //dataSource.getLanguageAndLangToLang()
-
                 dataSource.insertTopic(Topic( "Travel", 0))
                 dataSource.insertTopic(Topic( "At home", 0))
                 dataSource.insertTopic(Topic( "Work", 0))

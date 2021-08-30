@@ -15,14 +15,12 @@ class ToRepeatViewModel(val dataSource: FiszkiDatabaseDao, application: Applicat
     val flashcards
         get() = _flashcards
 
-
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
     }
 
     init {
-
         _flashcards = dataSource.getToRepeatFlashcards(langToLangId)
 
     }

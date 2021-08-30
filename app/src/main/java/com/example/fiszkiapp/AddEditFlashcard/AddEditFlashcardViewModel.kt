@@ -18,7 +18,13 @@ import org.json.JSONArray
 import java.io.IOException
 
 
-class AddEditFlashcardViewModel(val dataSource: FiszkiDatabaseDao, application: Application, val flashcardId: Int, val topicId: Int, langToLangId: Int): ViewModel() {
+class AddEditFlashcardViewModel(
+    val dataSource: FiszkiDatabaseDao,
+    application: Application,
+    val flashcardId: Int,
+    val topicId: Int,
+    langToLangId: Int
+) : ViewModel() {
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(IO + viewModelJob)
@@ -43,10 +49,9 @@ class AddEditFlashcardViewModel(val dataSource: FiszkiDatabaseDao, application: 
     }
 
     init {
-        if(flashcardId == -1){
+        if (flashcardId == -1) {
             //new flashcard
-        }
-        else{
+        } else {
             _flashcardAndTopic = dataSource.getFlashcardandTopic(flashcardId)
             _flashcard = dataSource.getFlashcard(flashcardId)
             uiScope.launch {
@@ -54,7 +59,7 @@ class AddEditFlashcardViewModel(val dataSource: FiszkiDatabaseDao, application: 
         }
     }
 
-    fun deleteFlashcard(flashcardId: Int){
+    fun deleteFlashcard(flashcardId: Int) {
         CoroutineScope(IO).launch {
             dataSource.deleteFlashcard(flashcardId)
         }
@@ -71,43 +76,6 @@ class AddEditFlashcardViewModel(val dataSource: FiszkiDatabaseDao, application: 
             dataSource.updateFlashcard(flashcardId, wordText, translateText)
         }
     }
-
-//    fun trans(){ //ten działa
-//        val client = OkHttpClient()
-//
-//        //val postData = JsonObject()
-//        val postD = JSONObject()
-//        postD.put("name", "morpheus")
-//        postD.put("job", "leader")
-//
-//        //postData.addProperty("name", "morpheus")
-//        //postData.addProperty("job", "leader")
-//
-//        val JSON = MediaType.parse("application/json; charset=utf-8")
-//        val postBody: RequestBody = RequestBody.create(JSON, postD.toString())
-//        val post: Request = Request.Builder()
-//            .url("https://reqres.in/api/users")
-//            .post(postBody)
-//            .build()
-//
-//        client.newCall(post).enqueue(object : Callback {
-//            override fun onFailure(call: Call?, e: IOException) {
-//                e.printStackTrace()
-//            }
-//
-//            override fun onResponse(call: Call?, response: Response) {
-//                try {
-//                    val responseBody = response.body()
-//                    if (!response.isSuccessful) {
-//                        throw IOException("Unexpected code $response")
-//                    }
-//                    Log.i("TRANS", responseBody!!.string())
-//                } catch (e: Exception) {
-//                    e.printStackTrace()
-//                }
-//            }
-//        })
-//    }
 
     fun translate(lang: String, phase: String) {
         val url =
@@ -128,7 +96,6 @@ class AddEditFlashcardViewModel(val dataSource: FiszkiDatabaseDao, application: 
             override fun onFailure(call: Call?, e: IOException) {
                 e.printStackTrace()
             }
-
             override fun onResponse(call: Call?, response: Response) {
                 try {
                     val responseBody = response.body()
@@ -136,15 +103,6 @@ class AddEditFlashcardViewModel(val dataSource: FiszkiDatabaseDao, application: 
                         throw IOException("Unexpected code $response")
                     }
                     responseData(responseBody)
-                    //var liveData = LiveData<String>
-                    //_translation?.value = jsonobject2.get("text").toString()
-
-//                    val currentName: MutableLiveData<String> by lazy {
-//                        MutableLiveData<String>()
-//                    }
-                    //currentName.value = jsonobject2.get("text").toString()
-
-
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -153,14 +111,12 @@ class AddEditFlashcardViewModel(val dataSource: FiszkiDatabaseDao, application: 
     }
 
     private fun responseData(responseBody: ResponseBody?) {
-        Log.i("JSONobjectststs", "sdfsdfsd")
         val jsonData: String = responseBody!!.string()
-        val jsonarray = JSONArray(jsonData)
-        val jsonobject = jsonarray.getJSONObject(0)
-        val jsonarray2 = jsonobject.getJSONArray("translations")
-        val jsonobject2 = jsonarray2.getJSONObject(0)
-        val str = jsonobject2.get("text").toString()
-        Log.i("JSONobjecttss", str)
+        val jsonarray_1 = JSONArray(jsonData)
+        val jsonobject_1 = jsonarray_1.getJSONObject(0)
+        val jsonarray_2 = jsonobject_1.getJSONArray("translations")
+        val jsonobject_2 = jsonarray_2.getJSONObject(0)
+        val str = jsonobject_2.get("text").toString()
         _translation.postValue(str)
 
 

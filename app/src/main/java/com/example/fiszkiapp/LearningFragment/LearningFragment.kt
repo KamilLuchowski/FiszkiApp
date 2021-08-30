@@ -83,15 +83,14 @@ class LearningFragment : Fragment() {
 
             bind(inflater, container, binding)
         }
-
         return binding.root
     }
-
 
     private fun translationVisible(binding: FragmentLearningBinding) {
         binding.learningTranslation.visibility = VISIBLE
         binding.showAnswerButton.text = getString(R.string.hide_answer)
     }
+
     private fun translationInvisible(binding: FragmentLearningBinding) {
         binding.learningTranslation.visibility = INVISIBLE
         binding.showAnswerButton.text = getString(R.string.show_answer)

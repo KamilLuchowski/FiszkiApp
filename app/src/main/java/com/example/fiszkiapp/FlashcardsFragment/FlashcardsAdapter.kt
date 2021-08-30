@@ -38,7 +38,6 @@ class FlashcardsAdapter(val context: Context, var langToLangId: Int): RecyclerVi
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(data[position], langToLangId)
 
-
         holder.itemView.setOnClickListener{
             Navigation.findNavController(holder.itemView)
                 .navigate(FlashcardsFragmentDirections
@@ -47,15 +46,11 @@ class FlashcardsAdapter(val context: Context, var langToLangId: Int): RecyclerVi
     }
 
     class ViewHolder private constructor(itemView: View): RecyclerView.ViewHolder(itemView){
-        lateinit var TTS: TextToSpeech
+        var TTS: TextToSpeech
         init {
             TTS = TextToSpeech(itemView.context,
                 TextToSpeech.OnInitListener { status ->
                     if (status != TextToSpeech.ERROR) {
-
-
-                        //                    t1.setLanguage(Locale.GERMANY);
-                        //                    t1.setLanguage(new Locale("ru"));
                         Log.d("TTS", "ok")
                     } else {
                         Log.d("TTS", "error")
@@ -81,7 +76,6 @@ class FlashcardsAdapter(val context: Context, var langToLangId: Int): RecyclerVi
         }
 
         private fun textToSpeech(word:String, langToLangId: Int){
-
             speakerButton.setOnClickListener{
                 val dict = LangToLangDictionary()
                 TTS.language = Locale(dict.learningLanguage(langToLangId))

@@ -12,10 +12,8 @@
     <string name="russian">russian</string>
     <string name="export_import_info">Export/Import Info</string>
     <string name="export_import_description">If you want to save your data or move to another
-        device: /n
-        Open your favorite file explorer and go to FiszkiApp folder.
-        Copy "database" folder and put it in a save place. /n
-        To import data just go to "FiszkiApp" folder and replace "database folder there.</string>
+        device: \nOpen your favorite file explorer and go to FiszkiApp folder.
+        Copy "database" folder and put it in a save place. \nTo import data just go to "FiszkiApp" folder and replace "database folder there.</string>
     <string name="flashcard_edit">Flashcard Edit</string>
     <string name="topics">Topics</string>
     <string name="flashcards">Flashcards</string>
@@ -41,5 +39,5 @@
     <string name="what_does_it_mean">What does it mean?</string>
     <string name="source_language">Source language</string>
     <string name="let_s_study">Let\'s study:</string>
-    <string name="there_s_phases_that_are_hard_to_remember_take_a_look_and_play_a_repeat_game">There\'s phases that are hard to remember. Take a look and play a repeat game!</string>
+    <string name="there_s_phases_that_are_hard_to_remember_take_a_look_and_play_a_repeat_game">There are phrases that are hard to remember. Take a look and play a repeat game!</string>
 </resources>

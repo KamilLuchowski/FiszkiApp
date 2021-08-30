@@ -21,12 +21,6 @@ interface FiszkiDatabaseDao {
     @Query("SELECT * from language_table WHERE languageId =:key")
      suspend fun getLanguage(key: Int): Language?
 
-//    @Query("DELETE FROM language_table")
-//     suspend fun clearLang()
-
-//    @Query("DELETE FROM langToLang_table")
-//    suspend fun clearLangToLang()
-
     @Query("SELECT * FROM langToLang_table")
     fun getLangToLangs(): LiveData<List<LangToLang>>
 

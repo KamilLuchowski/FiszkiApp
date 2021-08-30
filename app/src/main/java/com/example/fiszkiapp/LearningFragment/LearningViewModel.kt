@@ -22,7 +22,7 @@ class LearningViewModel(
     var application: Application,
     val topicId: Int,
     langToLangId: Int
-): ViewModel() {
+) : ViewModel() {
     lateinit var TTS: TextToSpeech
     private var viewModelJob = Job()
 
@@ -50,29 +50,24 @@ class LearningViewModel(
     init {
         if (topicId == -1) {
             _flashcards = dataSource.getToRepeatFlashcards(langToLangId)
-        }
-        else
+        } else
             _flashcards = dataSource.getFlashcards(topicId)
-        //Log.i("RAND", _flashcards.value.toString())
     }
 
-    fun randomList(){
-        if (_flashcards.value == null){
-            Log.i("RAND","Null/No data")
-            return
+    fun randomList() {
+        _randomFlashcards = when {
+            _flashcards.value == null -> {
+                return
+            }
+            _flashcards.value!!.size > 10 ->
+                _flashcards.value!!.shuffled().take(10).toMutableList()
+            else ->
+                _flashcards.value!!.shuffled().take(_flashcards.value!!.size).toMutableList()
         }
-        else if (_flashcards.value!!.size > 10)
-            _randomFlashcards = _flashcards.value!!.shuffled().take(10).toMutableList()
-        else
-            _randomFlashcards = _flashcards.value!!.shuffled().take(_flashcards.value!!.size).toMutableList()
-
-        flashcardsSize = randomFlashcards?.size!!
-
-        Log.i("RAND", flashcardsSize.toString())
     }
 
     fun addToRepeat(flashcard: Flashcard, langToLangId: Int) {
-        val f =  ToRepeat(flashcard.flashcardId, langToLangId)
+        val f = ToRepeat(flashcard.flashcardId, langToLangId)
 
         CoroutineScope(Dispatchers.IO).launch {
             dataSource.insertFlashcardToRepeat(f)
@@ -82,7 +77,7 @@ class LearningViewModel(
     fun deleteToRepeatFlashcard(flashcardId: Int?) {
         if (flashcardId != null) {
             CoroutineScope(IO).launch {
-            dataSource.deleteToRepeatFlashcard(flashcardId)
+                dataSource.deleteToRepeatFlashcard(flashcardId)
             }
         }
     }
@@ -100,9 +95,7 @@ class LearningViewModel(
                 )
             }
         }
-
         iterator++
-
     }
 
     fun iKnewHandler(topicId: Int) {
@@ -117,9 +110,6 @@ class LearningViewModel(
         return TextToSpeech(application.applicationContext,
             TextToSpeech.OnInitListener { status ->
                 if (status != TextToSpeech.ERROR) {
-
-                    //                    t1.setLanguage(Locale.GERMANY);
-                    //                    t1.setLanguage(new Locale("ru"));
                     Log.d("TTS", "ok")
                 } else {
                     Log.d("TTS", "error")

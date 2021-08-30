@@ -64,8 +64,6 @@ class ToRepeatAdapter(val context: Context, var langToLangId: Int): RecyclerView
                     if (status != TextToSpeech.ERROR) {
                         val dict = LangToLangDictionary()
                         TTS.language = Locale(dict.learningLanguage(langToLangId))
-                        //                    t1.setLanguage(Locale.GERMANY);
-                        //                    t1.setLanguage(new Locale("ru"));
                         Log.d("TTS", "ok")
                     } else {
                         Log.d("TTS", "error")

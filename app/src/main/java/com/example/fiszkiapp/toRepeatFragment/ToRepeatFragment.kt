@@ -49,13 +49,10 @@ class ToRepeatFragment: Fragment() {
         binding.listToRepeatFlashcards.layoutManager = LinearLayoutManager(context)
         setHasOptionsMenu(true)
 
-
         viewModel.flashcards.observe(viewLifecycleOwner, Observer {
             adapter.data = it
             adapter.notifyDataSetChanged()
         })
-
-
 
         binding.PlayToRepeatButton.setOnClickListener {
             if (viewModel.flashcards.value?.size == 0)

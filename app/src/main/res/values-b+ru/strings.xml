@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="translate">Translate</string>
-    <string name="new_topic">new topic</string>
-    <string name="add">ADD</string>
-    <string name="new_name">new name</string>
-    <string name="delete_a_topic">Delete a topic</string>
-    <string name="rename_a_topic">Rename a topic</string>
-    <string name="empty_field">Empty field(s)</string>
-    <string name="polish">polish</string>
-    <string name="english">english</string>
-    <string name="russian">russian</string>
-    <string name="export_import_info">Export/Import Info</string>
+    <string name="translate">Перевести</string>
+    <string name="new_topic">Новая тема</string>
+    <string name="add">Добавлять</string>
+    <string name="new_name">Новое имя</string>
+    <string name="delete_a_topic">Удалить тему</string>
+    <string name="rename_a_topic">Переименовать тему</string>
+    <string name="empty_field">Пустое поле (ы)</string>
+    <string name="polish">Польский</string>
+    <string name="english">английский</string>
+    <string name="russian">русский</string>
+    <string name="export_import_info">Информация об экспорте / импорте</string>
     <string name="export_import_description">If you want to save your data or move to another
         device: /n
         Open your favorite file explorer and go to FiszkiApp folder.
         Copy "database" folder and put it in a save place. /n
         To import data just go to "FiszkiApp" folder and replace "database folder there.</string>
-    <string name="flashcard_edit">Flashcard Edit</string>
-    <string name="topics">Topics</string>
-    <string name="flashcards">Flashcards</string>
-    <string name="flashcard_details">Flashcard Details</string>
-    <string name="to_repeat">Repeat it</string>
-    <string name="learning">Learning</string>
+    <string name="flashcard_edit">Редактировать карточку</string>
+    <string name="topics">Темы</string>
+    <string name="flashcards">Карточки</string>
+    <string name="flashcard_details">Подробная информация о карточке</string>
+    <string name="to_repeat">Повтори это</string>
+    <string name="learning">Изучение</string>
     <string name="learning_finished">Finished</string>
-    <string name="hide_answer">HIDE ANSWER</string>
-    <string name="show_answer">SHOW ANSWER</string>
-    <string name="your_result">Your result</string>
-    <string name="i_knew_it_clicks">I knew it clicks</string>
-    <string name="quot_i_didn_t_know_it_quot_clicks">\"I didn\'t know it\" clicks</string>
-    <string name="usage_example_notes">Usage example, notes</string>
-    <string name="word">Word</string>
-    <string name="translation">Translation</string>
-    <string name="name">Name</string>
-    <string name="topic">Topic</string>
-    <string name="description">Description</string>
-    <string name="icon_made_by_smashicons_from_flaticon">Icon made by Smashicons from Flaticon</string>
-    <string name="study">Study</string>
-    <string name="i_didn_t_know">I didn\'t know</string>
-    <string name="i_knew_it">I knew it</string>
-    <string name="what_does_it_mean">What does it mean?</string>
-    <string name="source_language">Source language</string>
-    <string name="let_s_study">Let\'s study:</string>
-    <string name="there_s_phases_that_are_hard_to_remember_take_a_look_and_play_a_repeat_game">There\'s phases that are hard to remember. Take a look and play a repeat game!</string>
+    <string name="hide_answer">СКРЫТЬ ОТВЕТ</string>
+    <string name="show_answer">ПОКАЖИ ОТВЕТ</string>
+    <string name="your_result">Ваш результат</string>
+    <string name="i_knew_it_clicks">\"Я знал\" клики</string>
+    <string name="quot_i_didn_t_know_it_quot_clicks">\"Я не знал\" клики</string>
+    <string name="usage_example_notes">Пример использования, примечания</string>
+    <string name="word">Слово</string>
+    <string name="translation">Перевод</string>
+    <string name="name">Название</string>
+    <string name="topic">Тема</string>
+    <string name="description">Описание</string>
+    <string name="icon_made_by_smashicons_from_flaticon">Иконка от Smashicons от Flaticon</string>
+    <string name="study">Изучение</string>
+    <string name="i_didn_t_know">Я не знал</string>
+    <string name="i_knew_it">Я знал</string>
+    <string name="what_does_it_mean">Что это означает?</string>
+    <string name="source_language">Исходный язык</string>
+    <string name="let_s_study">Давай учиться:</string>
+    <string name="there_s_phases_that_are_hard_to_remember_take_a_look_and_play_a_repeat_game">Есть фразы, которые сложно запомнить. Взгляните и сыграйте в повторную игру!</string>
 </resources>
